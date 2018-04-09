@@ -46,10 +46,11 @@
             <TextView
                 android:id="@+id/lblErrorNameRegistry"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp" />
+                android:textColor="@android:color/holo_red_dark" />
 
 
             <TextView
@@ -73,11 +74,12 @@
 
             <TextView
                 android:id="@+id/lblErrorSurnameRegistry"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textColor="@android:color/holo_red_dark" />
 
             <TextView
                 android:id="@+id/lblEmailRegistry"
@@ -100,10 +102,11 @@
             <TextView
                 android:id="@+id/lblErrorEmailRegistry"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp" />
+                android:textColor="@android:color/holo_red_dark" />
 
             <TextView
                 android:id="@+id/lblPasswordRegistry"
@@ -126,11 +129,12 @@
 
             <TextView
                 android:id="@+id/lblErrorPasswordRegistry"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textColor="@android:color/holo_red_dark" />
 
             <TextView
                 android:id="@+id/lblPasswordconfRegistry"
@@ -152,10 +156,11 @@
 
             <TextView
                 android:id="@+id/lblErrorPasswordconfRegistry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:textColor="@android:color/holo_red_dark" />
 
             <Button
                 android:id="@+id/btnRegistry"
