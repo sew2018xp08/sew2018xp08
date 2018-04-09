@@ -39,7 +39,9 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
             android:inputType="textPersonName"
-                android:text="Max" />
+                android:text="Max"
+
+            />
 
             <TextView
                 android:id="@+id/lblErrorNameRegistry"
@@ -118,8 +120,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="***" />
+                android:inputType="textPassword"
+                android:text="asd"
+                />
 
             <TextView
                 android:id="@+id/lblErrorPasswordRegistry"
@@ -144,8 +147,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="***" />
+                android:inputType="textPassword"
+                android:text="asd" />
 
             <TextView
                 android:id="@+id/lblErrorPasswordconfRegistry"
