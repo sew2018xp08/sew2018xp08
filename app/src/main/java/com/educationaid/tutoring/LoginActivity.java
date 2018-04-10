@@ -12,7 +12,7 @@ import org.w3c.dom.Text;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText txt_username;
+    TextView txt_username;
     EditText txt_password;
     TextView txt_warning;
     Button btn_login;
@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Button clickedButton = (Button) v;
         switch (clickedButton.getId()) {
             case R.id.btnLogin:
-                if(txt_username.getText().equals("") || txt_password.getText().equals(""))
+                if((txt_username.getText().toString()).equals("") || (txt_password.getText().toString()).equals(""))
                 {
                     //todo: Create string class..
                     txt_warning.setVisibility(View.VISIBLE);

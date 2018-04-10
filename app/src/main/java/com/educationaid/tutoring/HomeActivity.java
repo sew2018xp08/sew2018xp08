@@ -12,14 +12,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Intent to_login = new Intent(HomeActivity.this, LoginActivity.class);
-        startActivity(to_login);
+        ((Button) findViewById(R.id.btnLogin)).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
-            
+            case R.id.btnLogin:
+                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
         }
     }
 }
