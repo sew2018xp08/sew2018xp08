@@ -29,7 +29,7 @@ import java.util.List;
  */
 
 public class HttpUtilLogin {
-    public static void sendPostRequest(String givenEmail, String givenPassword) {
+    public static void doLogin(String givenEmail, String givenPassword) {
 
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
 

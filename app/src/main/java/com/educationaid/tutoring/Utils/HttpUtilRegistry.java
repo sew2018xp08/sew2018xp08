@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 public class HttpUtilRegistry {
-    public static void sendPostRequest(String givenUsername, String givenPassword) {
+    public static void doRegistry(String givenUsername, String givenPassword) {
 
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
 
