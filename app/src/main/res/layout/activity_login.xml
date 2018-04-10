@@ -61,7 +61,7 @@
         android:id="@+id/txtViewPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Password"
+        android:text="Passwort"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txtPassword"
         app:layout_constraintStart_toStartOf="@+id/txtPassword" />
@@ -81,7 +81,7 @@
         android:id="@+id/txtRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="Not a tutor yet?"
         app:layout_constraintBaseline_toBaselineOf="@+id/btnRegister"
         app:layout_constraintStart_toStartOf="@+id/btnLogin"
         tools:text="Not a tutor yet?" />
@@ -90,11 +90,11 @@
         android:id="@+id/btnRegister"
         android:layout_width="wrap_content"
         android:layout_height="39dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginEnd="54dp"
+        android:layout_marginRight="54dp"
         android:layout_marginTop="82dp"
         android:text="Register"
-        app:layout_constraintStart_toEndOf="@+id/txtRegister"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtWarning" />
 
 </android.support.constraint.ConstraintLayout>
