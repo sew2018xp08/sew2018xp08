@@ -29,7 +29,7 @@ import java.util.List;
  */
 
 public class HttpUtilLogin {
-    public static void sendPostRequest(String givenEmail, String givenPassword) {
+    public static void doLogin(String givenEmail, String givenPassword) {
 
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
 
@@ -109,7 +109,7 @@ public class HttpUtilLogin {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
 
-                if(result.equals("working")){
+                if(result.equals("Connection successsuccsess")){
                     System.out.println("HTTP POST is working...");
                 }else{
                     System.out.println("Invalid POST req...");

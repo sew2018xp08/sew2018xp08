@@ -6,9 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.educationaid.tutoring.Utils.HttpUtilLogin;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -26,15 +25,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Button clickedButton = (Button) v;
         switch (clickedButton.getId()) {
             case R.id.btnLogin:
-                if((((EditText)findViewById(R.id.txtUserName)).getText().toString()).equals("") || (((EditText) findViewById(R.id.txtPassword)).getText().toString()).equals(""))
+                if((((EditText)findViewById(R.id.txtUserName)).getText().toString()).equals("") || (((EditText) findViewById(R.id.txtPassword)).getText().toString()).equals("")
+                        || (!(((EditText)findViewById(R.id.txtUserName)).getText().toString()).contains("@")))
                 {
-                    //todo: Create string class..
                     (findViewById(R.id.txtWarning)).setVisibility(View.VISIBLE);
+                    break;
                 }
-                //do something
+
+                HttpUtilLogin.doLogin(((EditText)findViewById(R.id.txtUserName)).getText().toString(), ((EditText)findViewById(R.id.txtPassword)).getText().toString());
+
                 break;
             case R.id.btnRegister:
-                startActivity(new Intent(LoginActivity.this, RegistryActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                 break;
         }
     }
