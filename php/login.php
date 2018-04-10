@@ -2,8 +2,8 @@
 
     include "/users/sew2018xp08/www/PHP/config.php";
 
-    $email = "johnn@example.comm";
-    $password = "1234";
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
     //validation
     $sql = "SELECT * FROM user WHERE email = '$email' and password = '$password'";

@@ -2,6 +2,8 @@ package com.educationaid.tutoring.Utils;
 
 import android.os.AsyncTask;
 
+import com.educationaid.tutoring.Constants.Constants;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -27,33 +29,33 @@ import java.util.List;
  */
 
 public class HttpUtilLogin {
-    public static void sendPostRequest(String givenUsername, String givenPassword) {
+    public static void sendPostRequest(String givenEmail, String givenPassword) {
 
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
 
             @Override
             protected String doInBackground(String... params) {
 
-                String paramUsername = params[0];
+                String paramEmail = params[0];
                 String paramPassword = params[1];
 
                 HttpClient httpClient = new DefaultHttpClient();
 
                 // In a POST request, we don't pass the values in the URL.
                 //Therefore we use only the web page URL as the parameter of the HttpPost argument
-                HttpPost httpPost = new HttpPost("http://sa2017.bplaced.net/post.php");
+                HttpPost httpPost = new HttpPost(Constants.PHP_LOGIN_LIMK);
 
                 // Because we are not passing values over the URL, we should have a mechanism to pass the values that can be
                 //uniquely separate by the other end.
                 //To achieve that we use BasicNameValuePair
                 //Things we need to pass with the POST request
-                BasicNameValuePair usernameBasicNameValuePair = new BasicNameValuePair("id", paramUsername);
-                BasicNameValuePair passwordBasicNameValuePAir = new BasicNameValuePair("stringdata", paramPassword);
+                BasicNameValuePair emailBasicNameValuePair = new BasicNameValuePair(Constants.POST_ID_EMAIL, paramEmail);
+                BasicNameValuePair passwordBasicNameValuePAir = new BasicNameValuePair(Constants.POST_ID_PASSWORD, paramPassword);
 
                 // We add the content that we want to pass with the POST request to as name-value pairs
                 //Now we put those sending details to an ArrayList with type safe of NameValuePair
                 List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
-                nameValuePairList.add(usernameBasicNameValuePair);
+                nameValuePairList.add(emailBasicNameValuePair);
                 nameValuePairList.add(passwordBasicNameValuePAir);
 
                 try {
@@ -116,6 +118,6 @@ public class HttpUtilLogin {
         }
 
         SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
-        sendPostReqAsyncTask.execute(givenUsername, givenPassword);
+        sendPostReqAsyncTask.execute(givenEmail, givenPassword);
     }
 }
