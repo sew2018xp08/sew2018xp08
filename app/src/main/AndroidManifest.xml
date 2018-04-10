@@ -28,12 +28,18 @@
             android:parentActivityName=".HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity">
+                android:value=".LoginActivity">
 
             </meta-data>
 
         </activity>
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity">
+
+            </meta-data>
+        </activity>
     </application>
 
 </manifest>
