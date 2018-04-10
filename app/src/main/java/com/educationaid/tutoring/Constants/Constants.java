@@ -17,5 +17,6 @@ public class Constants {
 
     //SERVER ANSWER - EQUALS
     public static String ANS_CREATED_USER_SUCCESFULLY = "New record created successfully";
+    public static String ANS_RIGHT_USERNAME_PASSWORD = "succsess";
 
 }
