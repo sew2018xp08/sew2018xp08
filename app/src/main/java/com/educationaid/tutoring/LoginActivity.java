@@ -12,28 +12,13 @@ import org.w3c.dom.Text;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextView txt_username;
-    EditText txt_password;
-    TextView txt_warning;
-    Button btn_login;
-    Button btn_register;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
-        txt_username = (EditText) findViewById(R.id.txtUserName);
-        txt_password = (EditText) findViewById(R.id.txtPassword);
-        txt_warning = (TextView) findViewById(R.id.txtWarning);
-        btn_login = (Button) findViewById(R.id.btnLogin);
-        btn_login.setOnClickListener(this);
-        btn_register = (Button) findViewById(R.id.btnRegister);
-        btn_register.setOnClickListener(this);
-        txt_warning.setVisibility(View.INVISIBLE);
-
-
+        (findViewById(R.id.btnLogin)).setOnClickListener(this);
+        (findViewById(R.id.btnRegister)).setOnClickListener(this);
+        (findViewById(R.id.txtWarning)).setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -41,10 +26,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Button clickedButton = (Button) v;
         switch (clickedButton.getId()) {
             case R.id.btnLogin:
-                if((txt_username.getText().toString()).equals("") || (txt_password.getText().toString()).equals(""))
+                if((((EditText)findViewById(R.id.txtUserName)).getText().toString()).equals("") || (((EditText) findViewById(R.id.txtPassword)).getText().toString()).equals(""))
                 {
                     //todo: Create string class..
-                    txt_warning.setVisibility(View.VISIBLE);
+                    (findViewById(R.id.txtWarning)).setVisibility(View.VISIBLE);
                 }
                 //do something
                 break;
