@@ -47,6 +47,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/lblErrorNameRegistry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Darf nicht leer sein!"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@+id/txtNameRegistry"
+                app:layout_constraintTop_toBottomOf="@+id/txtNameRegistry" />
+
+            <TextView
                 android:id="@+id/lblSurnameRegistry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,6 +82,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtNameRegistry" />
 
             <TextView
+                android:id="@+id/lblErrorSurnameRegistry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Darf nicht leer sein!"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@+id/txtSurnameRegistry"
+                app:layout_constraintTop_toBottomOf="@+id/txtSurnameRegistry" />
+
+            <TextView
                 android:id="@+id/lblEmailRegistry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,16 +105,24 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="54dp"
-                android:layout_marginLeft="54dp"
-                android:layout_marginRight="54dp"
                 android:layout_marginStart="54dp"
                 android:layout_marginTop="48dp"
                 android:ems="10"
                 android:hint="max.mustermann@gmail.com"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtSurnameRegistry" />
+
+            <TextView
+                android:id="@+id/lblErrorEmailRegistry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Darf nicht leer sein!"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@+id/txtEmailRegistry"
+                app:layout_constraintTop_toBottomOf="@+id/txtEmailRegistry" />
 
             <TextView
                 android:id="@+id/lblPasswordRegistry"
@@ -122,6 +150,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtEmailRegistry" />
 
             <TextView
+                android:id="@+id/lblErrorPasswordRegistry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Darf nicht leer sein!"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@+id/txtPasswordRegistry"
+                app:layout_constraintTop_toBottomOf="@+id/txtPasswordRegistry" />
+
+            <TextView
                 android:id="@+id/lblPasswordconfRegistry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -147,26 +185,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtPasswordRegistry" />
 
             <TextView
-                android:id="@+id/lblErrorPasswordRegistry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/holo_red_dark"
-                app:layout_constraintStart_toStartOf="@+id/txtPasswordRegistry"
-                app:layout_constraintTop_toBottomOf="@+id/txtPasswordRegistry" />
-
-            <TextView
-                android:id="@+id/lblErrorEmailRegistry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/holo_red_dark"
-                app:layout_constraintStart_toStartOf="@+id/txtEmailRegistry"
-                app:layout_constraintTop_toBottomOf="@+id/txtEmailRegistry" />
-
-            <TextView
                 android:id="@+id/lblErrorPasswordconfRegistry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Darf nicht leer sein!"
                 android:textColor="@android:color/holo_red_dark"
+                android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="@+id/txtPasswordconfRegistry"
                 app:layout_constraintTop_toBottomOf="@+id/txtPasswordconfRegistry" />
 
@@ -186,21 +210,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtPasswordconfRegistry" />
 
-            <TextView
-                android:id="@+id/lblErrorSurnameRegistry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/holo_red_dark"
-                app:layout_constraintStart_toStartOf="@+id/txtSurnameRegistry"
-                app:layout_constraintTop_toBottomOf="@+id/txtSurnameRegistry" />
-
-            <TextView
-                android:id="@+id/lblErrorNameRegistry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/holo_red_dark"
-                app:layout_constraintStart_toStartOf="@+id/txtNameRegistry"
-                app:layout_constraintTop_toBottomOf="@+id/txtNameRegistry" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
