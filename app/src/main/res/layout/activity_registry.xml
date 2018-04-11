@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.educationaid.tutoring.RegistryActivity">
+    tools:context="com.educationaid.tutoring.RegisterActivity">
 
     <ScrollView
         android:layout_width="368dp"
@@ -39,7 +39,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
             android:inputType="textPersonName"
-                android:text="Max"
+                android:hint="Max"
 
             />
 
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:text="Nachname" />
+                android:hint="Nachname" />
 
 
             <EditText
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="max.mustermann@gmail.com" />
+                android:hint="max.mustermann@gmail.com" />
 
             <TextView
                 android:id="@+id/lblErrorEmailRegistry"
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:text="Passwort" />
+                android:hint="Passwort" />
 
             <EditText
                 android:id="@+id/txtPasswordRegistry"
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPassword"
-                android:text="asd"
+                android:hint="asd"
                 />
 
             <TextView

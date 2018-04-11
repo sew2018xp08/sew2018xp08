@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class RegistryActivity extends AppCompatActivity implements View.OnClickListener{
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
     private Button registry_;
 
     @Override

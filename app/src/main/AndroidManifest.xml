@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".RegistryActivity"
+        <activity android:name=".RegisterActivity"
             android:parentActivityName=".HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
