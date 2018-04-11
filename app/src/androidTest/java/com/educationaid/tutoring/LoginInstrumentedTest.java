@@ -52,4 +52,18 @@ public class LoginInstrumentedTest {
         onView(withId(R.id.txtUserName)).perform(typeText("john@example.com"));
         onView(withId(R.id.txtPassword)).perform(typeText("1234"));
     }
+
+    @Test
+    public void checkWrongLogin() {
+        onView(withId(R.id.txtUserName)).perform(typeText("john@exampleWrong.com"));
+        onView(withId(R.id.txtPassword)).perform(typeText("1234"));
+        onView(withId(R.id.btnLogin)).perform(click());
+    }
+
+    @Test
+    public void checkRightLogin() {
+        onView(withId(R.id.txtUserName)).perform(typeText("john@example.com"));
+        onView(withId(R.id.txtPassword)).perform(typeText("1234"));
+        onView(withId(R.id.btnLogin)).perform(click());
+    }
 }
