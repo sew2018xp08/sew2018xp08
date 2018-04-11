@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Button clickedButton = (Button) v;
         switch (clickedButton.getId()) {
             case R.id.btnLogin:
+                (findViewById(R.id.txtWarning)).setVisibility(View.INVISIBLE);
                 if((((EditText)findViewById(R.id.txtUserName)).getText().toString()).equals("") || (((EditText) findViewById(R.id.txtPassword)).getText().toString()).equals("")
                         || (!(((EditText)findViewById(R.id.txtUserName)).getText().toString()).contains("@")))
                 {
