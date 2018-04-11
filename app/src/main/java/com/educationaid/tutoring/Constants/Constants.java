@@ -20,5 +20,4 @@ public class Constants {
     public static String ANS_CREATED_USER_SUCCESFULLY = "New record created successfully";
     public static String ANS_RIGHT_USERNAME_PASSWORD = "succsess";
     public static String ANS_DELETE_USER = "test@test.com is deleted";
-
 }

@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.educationaid.tutoring.Constants.Constants;
 import com.educationaid.tutoring.Utils.HttpUtilRegistry;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
@@ -19,19 +21,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-
-
-
-
         if(view.getId() == R.id.btnRegistry){
             if(registryValidation()) {
                 HttpUtilRegistry.doRegister(((TextView)findViewById(R.id.txtNameRegistry)).getText().toString(), ((TextView)findViewById(R.id.txtSurnameRegistry)).getText().toString(),
                         ((TextView)findViewById(R.id.txtEmailRegistry)).getText().toString(), ((TextView)findViewById(R.id.txtPasswordRegistry)).getText().toString());
-                startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                    startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                }
             }
-
         }
-    }
+
 
     private Boolean registryValidation() {
         if(((TextView)findViewById(R.id.txtNameRegistry)).getText().toString().equals(""))

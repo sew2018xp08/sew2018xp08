@@ -1,6 +1,7 @@
 package com.educationaid.tutoring;
 
 import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -60,8 +61,49 @@ public class RegisterInstrumentedTest {
         onView(withId(R.id.txtPasswordconfRegistry)).check(matches(withText("123")));
 
         closeSoftKeyboard();
-        onView(withId(R.id.txtPasswordconfRegistry)).perform(scrollTo(), click());
+        onView(withId(R.id.btnRegistry)).perform(scrollTo(), click());
+        deleteTestUserFromDataBase();
     }
+
+
+    @Test
+    public void testRegisterExistingUser() {
+        onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("Max"));
+        onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("Mustermann"));
+        onView(withId(R.id.txtEmailRegistry)).perform(scrollTo(), typeText("test@test.com"));
+        onView(withId(R.id.txtPasswordRegistry)).perform(scrollTo(), typeText("123"));
+        onView(withId(R.id.txtPasswordconfRegistry)).perform(scrollTo(), typeText("123"));
+
+        onView(withId(R.id.txtNameRegistry)).check(matches(withText("Max")));
+        onView(withId(R.id.txtSurnameRegistry)).check(matches(withText("Mustermann")));
+        onView(withId(R.id.txtEmailRegistry)).check(matches(withText("test@test.com")));
+        onView(withId(R.id.txtPasswordRegistry)).check(matches(withText("123")));
+        onView(withId(R.id.txtPasswordconfRegistry)).check(matches(withText("123")));
+
+        closeSoftKeyboard();
+        onView(withId(R.id.btnRegistry)).perform(scrollTo(), click());
+
+        onView(withId(R.id.btnLogin)).perform(scrollTo(), click());
+        onView(withId(R.id.btnRegister)).perform(scrollTo(), click());
+
+        onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("Max"));
+        onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("Mustermann"));
+        onView(withId(R.id.txtEmailRegistry)).perform(scrollTo(), typeText("test@test.com"));
+        onView(withId(R.id.txtPasswordRegistry)).perform(scrollTo(), typeText("123"));
+        onView(withId(R.id.txtPasswordconfRegistry)).perform(scrollTo(), typeText("123"));
+
+        onView(withId(R.id.txtNameRegistry)).check(matches(withText("Max")));
+        onView(withId(R.id.txtSurnameRegistry)).check(matches(withText("Mustermann")));
+        onView(withId(R.id.txtEmailRegistry)).check(matches(withText("test@test.com")));
+        onView(withId(R.id.txtPasswordRegistry)).check(matches(withText("123")));
+        onView(withId(R.id.txtPasswordconfRegistry)).check(matches(withText("123")));
+
+        closeSoftKeyboard();
+        onView(withId(R.id.btnRegistry)).perform(scrollTo(), click());
+        deleteTestUserFromDataBase();
+
+    }
+
 
     public static void deleteTestUserFromDataBase() {
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
