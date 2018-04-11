@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -11,16 +12,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        findViewById(R.id.btnRegisterHome).setOnClickListener(this);
+        ((Button) findViewById(R.id.btnLogin)).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
-            case R.id.btnRegisterHome:
-                Intent intent = new Intent(this, RegisterActivity.class);
-                startActivity(intent);
-                break;
+            case R.id.btnLogin:
+                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
         }
     }
 }
