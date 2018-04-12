@@ -18,6 +18,7 @@
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -26,14 +27,17 @@
             android:parentActivityName=".HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LoginActivity"></meta-data>
+                android:value=".LoginActivity" />
         </activity>
         <activity android:name=".LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity"></meta-data>
+                android:value=".HomeActivity" />
         </activity>
-        <activity android:name=".TutorHomeScreenActivity" android:theme="@style/CustomActionBar" />
+        <activity
+            android:name=".TutorHomeScreenActivity"
+            android:theme="@style/CustomActionBar" />
+        <activity android:name=".CreateOfferActivity"></activity>
     </application>
 
 </manifest>
