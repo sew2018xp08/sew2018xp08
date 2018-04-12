@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Tutoring</string>
+    <string name="successful_registry">Benutzer wurde erfolgreich erstellt!</string>
+    <string name="user_alredy_exists">Benutzer existiert bereits!</string>
 </resources>

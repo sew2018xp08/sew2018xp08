@@ -33,6 +33,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
@@ -48,6 +49,7 @@ public class RegisterInstrumentedTest {
 
     @Test
     public void testRegister() {
+        deleteTestUserFromDataBase();
         onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("Max"));
         onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("Mustermann"));
         onView(withId(R.id.txtEmailRegistry)).perform(scrollTo(), typeText("test@test.com"));
@@ -62,46 +64,50 @@ public class RegisterInstrumentedTest {
 
         closeSoftKeyboard();
         onView(withId(R.id.btnRegistry)).perform(scrollTo(), click());
+        onView(withText(R.string.successful_registry)).inRoot(new ToastMatcher())
+                .check(matches(isDisplayed()));
         deleteTestUserFromDataBase();
     }
 
 
     @Test
     public void testRegisterExistingUser() {
-        onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("Max"));
-        onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("Mustermann"));
-        onView(withId(R.id.txtEmailRegistry)).perform(scrollTo(), typeText("test@test.com"));
-        onView(withId(R.id.txtPasswordRegistry)).perform(scrollTo(), typeText("123"));
-        onView(withId(R.id.txtPasswordconfRegistry)).perform(scrollTo(), typeText("123"));
-
-        onView(withId(R.id.txtNameRegistry)).check(matches(withText("Max")));
-        onView(withId(R.id.txtSurnameRegistry)).check(matches(withText("Mustermann")));
-        onView(withId(R.id.txtEmailRegistry)).check(matches(withText("test@test.com")));
-        onView(withId(R.id.txtPasswordRegistry)).check(matches(withText("123")));
-        onView(withId(R.id.txtPasswordconfRegistry)).check(matches(withText("123")));
-
-        closeSoftKeyboard();
-        onView(withId(R.id.btnRegistry)).perform(scrollTo(), click());
-
-        onView(withId(R.id.btnLogin)).perform(scrollTo(), click());
-        onView(withId(R.id.btnRegister)).perform(scrollTo(), click());
-
-        onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("Max"));
-        onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("Mustermann"));
-        onView(withId(R.id.txtEmailRegistry)).perform(scrollTo(), typeText("test@test.com"));
-        onView(withId(R.id.txtPasswordRegistry)).perform(scrollTo(), typeText("123"));
-        onView(withId(R.id.txtPasswordconfRegistry)).perform(scrollTo(), typeText("123"));
-
-        onView(withId(R.id.txtNameRegistry)).check(matches(withText("Max")));
-        onView(withId(R.id.txtSurnameRegistry)).check(matches(withText("Mustermann")));
-        onView(withId(R.id.txtEmailRegistry)).check(matches(withText("test@test.com")));
-        onView(withId(R.id.txtPasswordRegistry)).check(matches(withText("123")));
-        onView(withId(R.id.txtPasswordconfRegistry)).check(matches(withText("123")));
-
-        closeSoftKeyboard();
-        onView(withId(R.id.btnRegistry)).perform(scrollTo(), click());
         deleteTestUserFromDataBase();
+        onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("Max"));
+        onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("Mustermann"));
+        onView(withId(R.id.txtEmailRegistry)).perform(scrollTo(), typeText("test@test.com"));
+        onView(withId(R.id.txtPasswordRegistry)).perform(scrollTo(), typeText("123"));
+        onView(withId(R.id.txtPasswordconfRegistry)).perform(scrollTo(), typeText("123"));
 
+        onView(withId(R.id.txtNameRegistry)).check(matches(withText("Max")));
+        onView(withId(R.id.txtSurnameRegistry)).check(matches(withText("Mustermann")));
+        onView(withId(R.id.txtEmailRegistry)).check(matches(withText("test@test.com")));
+        onView(withId(R.id.txtPasswordRegistry)).check(matches(withText("123")));
+        onView(withId(R.id.txtPasswordconfRegistry)).check(matches(withText("123")));
+
+        closeSoftKeyboard();
+        onView(withId(R.id.btnRegistry)).perform(scrollTo(), click());
+
+        onView(withId(R.id.btnLogin)).perform(click());
+        onView(withId(R.id.btnRegister)).perform(click());
+
+        onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("Max"));
+        onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("Mustermann"));
+        onView(withId(R.id.txtEmailRegistry)).perform(scrollTo(), typeText("test@test.com"));
+        onView(withId(R.id.txtPasswordRegistry)).perform(scrollTo(), typeText("123"));
+        onView(withId(R.id.txtPasswordconfRegistry)).perform(scrollTo(), typeText("123"));
+
+        onView(withId(R.id.txtNameRegistry)).check(matches(withText("Max")));
+        onView(withId(R.id.txtSurnameRegistry)).check(matches(withText("Mustermann")));
+        onView(withId(R.id.txtEmailRegistry)).check(matches(withText("test@test.com")));
+        onView(withId(R.id.txtPasswordRegistry)).check(matches(withText("123")));
+        onView(withId(R.id.txtPasswordconfRegistry)).check(matches(withText("123")));
+
+        closeSoftKeyboard();
+        onView(withId(R.id.btnRegistry)).perform(scrollTo(), click());
+        onView(withText(R.string.user_alredy_exists)).inRoot(new ToastMatcher())
+                .check(matches(isDisplayed()));
+        deleteTestUserFromDataBase();
     }
 
 
