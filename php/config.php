@@ -13,5 +13,4 @@
     }
 
     $conn->query("SET NAMES 'utf8'");
-    echo "Connection success";
 ?>

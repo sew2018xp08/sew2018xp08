@@ -1,11 +1,11 @@
 <?php
 
-    include "PHP/config.php";
+     include "/users/sew2018xp08/www/PHP/config.php";
 
-    $firstname = "John";
-    $lastname = "Doe";
-    $email = "johnn@example.com";
-    $password = "1234";
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
     //Insert
     $sql = "INSERT INTO user (first_name, last_name, email, password)

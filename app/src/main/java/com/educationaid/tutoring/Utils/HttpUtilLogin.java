@@ -109,7 +109,7 @@ public class HttpUtilLogin {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
 
-                if(result.equals("working")){
+                if(result.equals(Constants.ANS_RIGHT_USERNAME_PASSWORD)){
                     System.out.println("HTTP POST is working...");
                 }else{
                     System.out.println("Invalid POST req...");
