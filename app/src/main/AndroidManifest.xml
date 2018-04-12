@@ -37,7 +37,7 @@
         <activity
             android:name=".TutorHomeScreenActivity"
             android:theme="@style/CustomActionBar" />
-        <activity android:name=".CreateOfferActivity"></activity>
+        <activity android:name=".CreateOfferActivity"/>
     </application>
 
 </manifest>
