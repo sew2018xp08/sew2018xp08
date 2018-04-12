@@ -1,5 +1,7 @@
 package com.educationaid.tutoring;
 
+import android.content.Intent;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,16 +20,30 @@ public class CreateOfferActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
                 public void onClick(View v){
-                final EditText editTitle = (EditText) findViewById(R.id.title_textbox);
-                final EditText descriptionTitle = (EditText) findViewById(R.id.description_textbox);
+                final TextInputLayout editTitle = (TextInputLayout) findViewById(R.id.title_text);
+                final TextInputLayout descriptionTitle = (TextInputLayout) findViewById(R.id.title_text);
 
-                if(editTitle.getText().toString().equals("")){
+                if(editTitle.getEditText().getText().toString().equals("")){
                     editTitle.setError("No Title");
                 }
-                if(descriptionTitle.getText().toString().equals("")){
+                if(descriptionTitle.getEditText().getText().toString().equals("")){
                     descriptionTitle.setError("No Description");
+                }
+                if((!editTitle.getEditText().getText().toString().equals(""))
+                        && (descriptionTitle.getEditText().getText().toString().equals(""))){
+                    // send database request
+                    startActivity(new Intent(CreateOfferActivity.this, HomeActivity.class));
                 }
             }
         });
+        final Button backButton = (Button) findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CreateOfferActivity.this, HomeActivity.class));
+
+            }
+        });
+
     }
 }

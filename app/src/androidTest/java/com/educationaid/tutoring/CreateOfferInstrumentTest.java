@@ -1,16 +1,24 @@
 package com.educationaid.tutoring;
 
 import android.content.Context;
+import android.support.design.widget.TextInputLayout;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
+import android.view.View;
 
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
 
@@ -29,29 +37,33 @@ public class CreateOfferInstrumentTest {
 
         assertEquals("com.educationaid.tutoring", appContext.getPackageName());
     }
-    /*
-    @Test
-    public void useLogoutButton() throws  Exception {
-        onView(withText("Add")).perform(click());
-    }
-    */
 
     @Test
-    public void isTitleLabelPresent() throws  Exception {
-        onView(withText("Title")).check(matches(isDisplayed()));
-    }
-    /*
-    @Test
-    public void useAddButton() throws  Exception {
-        onView(withText("+")).perform(click());
+    public void clickBackButton() throws  Exception {
+        onView(withId(R.id.back_button)).perform(click());
     }
     @Test
-    public void isOffersArePresent() throws  Exception {
-        onView(withText("Your offers")).check(matches(isDisplayed()));
+    public void clickAddButton() throws  Exception {
+        onView(withId(R.id.add_button)).perform(click());
     }
     @Test
-    public void isOffersArePresent2() throws  Exception {
-        onView(withText("English")).check(matches(isDisplayed()));
+    public void addAOffer() throws  Exception {
+        onView(withId(R.id.title_label)).perform(typeText("Analysis 1"));
+        onView(withId(R.id.descripiton_label)).perform(typeText("Nachhilfestunde Montags 9:00 im LZ 2"));
+        onView(withId(R.id.add_button)).perform(click());
     }
-    */
+
+    @Test
+    public void addAOfferWithoutDescription() throws  Exception {
+        onView(withId(R.id.title_label)).perform(typeText("Analysis 1"));
+        onView(withId(R.id.add_button)).perform(click());
+    }
+    @Test
+    public void addAOfferWithoutTitle() throws  Exception {
+        onView(withId(R.id.descripiton_label)).perform(typeText("Nachhilfestunde Montags 9:00 im LZ 2"));
+        onView(withId(R.id.add_button)).perform(click());
+    }
+
+
 }
+
