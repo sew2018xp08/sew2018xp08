@@ -2,6 +2,7 @@ package com.educationaid.tutoring;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,6 +20,9 @@ import static org.junit.Assert.assertEquals;
 
 public class TutorHomeScreenInstrumentTest {
 
+    @Rule
+    public ActivityTestRule<TutorHomeScreenActivity> mActivityRule =
+            new ActivityTestRule<>(TutorHomeScreenActivity.class);
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
@@ -32,6 +36,6 @@ public class TutorHomeScreenInstrumentTest {
     }
     @Test
     public void TestIsPresent()throws  Exception {
-        onView(withText("Hello Max Mustermann")).check(matches(isDisplayed()));
+        onView(withText("Hello Max Mustermann!")).check(matches(isDisplayed()));
     }
 }
