@@ -30,12 +30,26 @@ public class TutorHomeScreenInstrumentTest {
 
         assertEquals("com.educationaid.tutoring", appContext.getPackageName());
     }
+
     @Test
     public void useLogoutButton() throws  Exception {
         onView(withText("Logout")).perform(click());
     }
     @Test
-    public void TestIsPresent()throws  Exception {
-        onView(withText("Hello Max Mustermann!")).check(matches(isDisplayed()));
+    public void isWelcomeTextIsPresent() throws  Exception {
+        onView(withText("Hallo Max Mustermann!")).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void useAddButton() throws  Exception {
+        onView(withText("+")).perform(click());
+    }
+    @Test
+    public void isOffersArePresent() throws  Exception {
+        onView(withText("Your offers")).check(matches(isDisplayed()));
+    }
+    @Test
+    public void isOffersArePresent2() throws  Exception {
+        onView(withText("English")).check(matches(isDisplayed()));
     }
 }
