@@ -8,6 +8,7 @@ public class Constants {
     //links
     public static String PHP_LOGIN_LIMK = "http://sew2018xp08.bplaced.net/PHP/login.php";
     public static String PHP_REGISTER_LINK = "http://sew2018xp08.bplaced.net/PHP/register.php";
+    public static String PHP_TEST_DELETE_USER = "http://sew2018xp08.bplaced.net/PHP/test-delete_user.php";
 
     //POST IDs
     public static String POST_ID_EMAIL = "email";
@@ -18,5 +19,5 @@ public class Constants {
     //SERVER ANSWER - EQUALS
     public static String ANS_CREATED_USER_SUCCESFULLY = "New record created successfully";
     public static String ANS_RIGHT_USERNAME_PASSWORD = "succsess";
-
+    public static String ANS_DELETE_USER = "test@test.com is deleted";
 }
