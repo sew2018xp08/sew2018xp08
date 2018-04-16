@@ -1,49 +1,48 @@
 package com.educationaid.tutoring.adapters;
+
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.app.Activity;
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.educationaid.tutoring.R;
 
-// here's our beautiful adapter
-public class OfferListAdapter extends ArrayAdapter<String> {
+import java.util.List;
 
-    private Context mContext;
-    private int layoutResourceId;
-    private String data[] = null;
+public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyViewHolder> {
 
-    public OfferListAdapter(Context mContext, int layoutResourceId, String[] data) {
+    private List<String> itemList;
 
-        super(mContext, layoutResourceId, data);
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView text;
+        public MyViewHolder(View view) {
+            super(view);
+             text = view.findViewById(R.id.offerTitle);
+        }
+    }
 
-        this.layoutResourceId = layoutResourceId;
-        this.mContext = mContext;
-        this.data = data;
+
+    public OfferListAdapter(List<String> itemList) {
+        this.itemList = itemList;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.textview_offer_item, parent, false);
 
-        if(convertView==null){
-            // inflate the layout
-            LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-            convertView = inflater.inflate(layoutResourceId, parent, false);
-        }
-
-        // object item based on the position
-        String objectItem = data[position];
-
-        // get the TextView and then set the text (item name) and tag (item ID) values
-        TextView textViewItem = convertView.findViewById(R.id.offerItem);
-        textViewItem.setText(objectItem);
-
-        return convertView;
-
+        return new MyViewHolder(itemView);
     }
 
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        String a = itemList.get(position);
+        holder.text.setText(a);
+    }
+
+    @Override
+    public int getItemCount() {
+        return itemList.size();
+    }
 }

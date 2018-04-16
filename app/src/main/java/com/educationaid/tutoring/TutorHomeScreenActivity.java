@@ -3,6 +3,7 @@ package com.educationaid.tutoring;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,10 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.educationaid.tutoring.adapters.OfferListAdapter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TutorHomeScreenActivity extends AppCompatActivity {
 
@@ -25,12 +30,15 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        ListView listView = findViewById(R.id.offerListView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
         // specify an adapter (see also next example)
-        String[] myDataset = {"Analysis T1", "Betriebsysteme"};
-        OfferListAdapter oladapter = new OfferListAdapter(this, R.layout.textview_offer_item, myDataset);
-        listView.setAdapter(oladapter);
+        ArrayList<String> places = new ArrayList<>(Arrays.asList("Analysis T1", "Betriebsysteme"));
+        OfferListAdapter oladapter = new OfferListAdapter(places);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(oladapter);
 
 
         Button btnLogout = findViewById(R.id.buttonLogout);
