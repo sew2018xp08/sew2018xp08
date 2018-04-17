@@ -24,12 +24,6 @@
             android:gravity="right">
 
             <Button
-                android:id="@+id/buttonAdd"
-                android:layout_width="52dp"
-                android:layout_height="wrap_content"
-                android:text="+" />
-
-            <Button
                 android:id="@+id/buttonLogout"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
@@ -56,26 +50,45 @@
         android:id="@+id/offerTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Your offers"
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeText"
-        tools:background="@android:color/holo_green_dark" />
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/buttonAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_add_black_24dp"
+        app:backgroundTint="@android:color/holo_blue_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="368dp"
-        android:layout_height="427dp"
+        android:layout_width="match_parent"
+        android:layout_height="446dp"
+        android:layout_margin="8dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@android:color/holo_green_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/offerTitle"
-        tools:background="@android:color/holo_green_dark" />
+        app:layout_constraintTop_toBottomOf="@+id/offerTitle" />
 
 </android.support.constraint.ConstraintLayout>
