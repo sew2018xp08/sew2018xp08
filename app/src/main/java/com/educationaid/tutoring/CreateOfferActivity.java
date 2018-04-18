@@ -21,7 +21,7 @@ public class CreateOfferActivity extends AppCompatActivity {
             @Override
                 public void onClick(View v){
                 final TextInputLayout editTitle = (TextInputLayout) findViewById(R.id.title_text);
-                final TextInputLayout descriptionTitle = (TextInputLayout) findViewById(R.id.title_text);
+                final TextInputLayout descriptionTitle = (TextInputLayout) findViewById(R.id.description_text);
 
                 if(editTitle.getEditText().getText().toString().equals("")){
                     editTitle.setError("No Title");

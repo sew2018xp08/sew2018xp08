@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.educationaid.tutoring.adapters.OfferListAdapter;
 
@@ -27,13 +28,17 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        final RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        // specify an adapter (see also next example)
         ArrayList<String> places = new ArrayList<>(Arrays.asList("Analysis T1", "Betriebsysteme"));
-        OfferListAdapter oladapter = new OfferListAdapter(places);
+        OfferListAdapter.RecyclerViewClickListener listener = (view, position) -> {
+            Toast.makeText(view.getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
+        };
+        OfferListAdapter oladapter = new OfferListAdapter(places, listener);
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
+
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(oladapter);
 
