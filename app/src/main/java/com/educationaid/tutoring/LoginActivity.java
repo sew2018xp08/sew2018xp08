@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.educationaid.tutoring.Constants.Constants;
+import com.educationaid.tutoring.Model.User;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -19,6 +20,9 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,14 +49,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (clickedButton.getId()) {
             case R.id.btnLogin:
                 (findViewById(R.id.txtWarning)).setVisibility(View.INVISIBLE);
-                if((((EditText)findViewById(R.id.txtUserName)).getText().toString()).equals("") || (((EditText) findViewById(R.id.txtPassword)).getText().toString()).equals("")
-                        || (!(((EditText)findViewById(R.id.txtUserName)).getText().toString()).contains("@")))
-                {
+                if ((((EditText) findViewById(R.id.txtUserName)).getText().toString()).equals("") || (((EditText) findViewById(R.id.txtPassword)).getText().toString()).equals("")
+                        || (!(((EditText) findViewById(R.id.txtUserName)).getText().toString()).contains("@"))) {
                     (findViewById(R.id.txtWarning)).setVisibility(View.VISIBLE);
                     break;
                 }
 
-                doLogin(((EditText)findViewById(R.id.txtUserName)).getText().toString(), ((EditText)findViewById(R.id.txtPassword)).getText().toString());
+                doLogin(((EditText) findViewById(R.id.txtUserName)).getText().toString(), ((EditText) findViewById(R.id.txtPassword)).getText().toString());
 
                 break;
             case R.id.btnRegister:
@@ -115,7 +118,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         String bufferedStrChunk = null;
 
-                        while((bufferedStrChunk = bufferedReader.readLine()) != null){
+                        while ((bufferedStrChunk = bufferedReader.readLine()) != null) {
                             stringBuilder.append(bufferedStrChunk);
                         }
 
@@ -141,9 +144,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
 
-                if(result.equals(Constants.ANS_RIGHT_USERNAME_PASSWORD)){
+                if (!result.equals(Constants.ANS_RIGHT_USERNAME_PASSWORD)) {
+                    try {
+                        JSONArray obj = new JSONArray(result);
+                        System.out.println("Hei sweetty <3");
+
+                        HomeActivity.currentUser = new User(Integer.valueOf(obj.getJSONObject(0).getString("u_id")), obj.getJSONObject(0).getString("first_name"),
+                                obj.getJSONObject(0).getString("last_name"), obj.getJSONObject(0).getString("email"),
+                                Integer.valueOf(obj.getJSONObject(0).getString("admin")));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                }else{
+                } else {
                     Toast.makeText(LoginActivity.this, "Login failed!",
                             Toast.LENGTH_LONG).show();
                 }
