@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.educationaid.tutoring.Model.User;
 
@@ -22,6 +23,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         if(currentUser.getUserId() != 0) {
             ((Button) findViewById(R.id.btnLogin)).setVisibility(View.INVISIBLE);
             ((Button) findViewById(R.id.btnLogout)).setVisibility(View.VISIBLE);
+            ((TextView)findViewById(R.id.txtHomeText)).setText("Hallo " + currentUser.getFirstName() + " " + currentUser.getLastName() + "!");
         }
     }
 
@@ -35,6 +37,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 ((Button) findViewById(R.id.btnLogout)).setVisibility(View.INVISIBLE);
                 ((Button) findViewById(R.id.btnLogin)).setVisibility(View.VISIBLE);
                 currentUser = new User();
+                ((TextView)findViewById(R.id.txtHomeText)).setText("Tutoring");
         }
     }
 }
