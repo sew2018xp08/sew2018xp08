@@ -41,7 +41,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             if(registryValidation()) {
                 doRegister(((TextView)findViewById(R.id.txtNameRegistry)).getText().toString(), ((TextView)findViewById(R.id.txtSurnameRegistry)).getText().toString(),
                         ((TextView)findViewById(R.id.txtEmailRegistry)).getText().toString(), ((TextView)findViewById(R.id.txtPasswordRegistry)).getText().toString());
-                }
+                } else
+                Toast.makeText(RegisterActivity.this, "Check input",
+                        Toast.LENGTH_LONG).show();
             }
         }
 
@@ -66,7 +68,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             ((TextView)findViewById(R.id.lblErrorSurnameRegistry)).setVisibility(View.INVISIBLE);
         }
 
-        if(((TextView)findViewById(R.id.txtEmailRegistry)).getText().toString().equals(""))
+        if(((TextView)findViewById(R.id.txtEmailRegistry)).getText().toString().equals("") ||
+                android.util.Patterns.EMAIL_ADDRESS.matcher(((TextView)findViewById(R.id.txtEmailRegistry)).getText().toString()).matches())
         {
             ((TextView)findViewById(R.id.lblErrorEmailRegistry)).setVisibility(View.VISIBLE);
             return false;

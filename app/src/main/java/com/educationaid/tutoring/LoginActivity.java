@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.educationaid.tutoring.Constants.Constants;
 
@@ -60,7 +61,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    public static void doLogin(String givenEmail, String givenPassword) {
+    public void doLogin(String givenEmail, String givenPassword) {
 
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
 
@@ -141,9 +142,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 super.onPostExecute(result);
 
                 if(result.equals(Constants.ANS_RIGHT_USERNAME_PASSWORD)){
-                    System.out.println("HTTP POST is working...");
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 }else{
-                    System.out.println("Invalid POST req...");
+                    Toast.makeText(LoginActivity.this, "Login failed!",
+                            Toast.LENGTH_LONG).show();
                 }
             }
         }
