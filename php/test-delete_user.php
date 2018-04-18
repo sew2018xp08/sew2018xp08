@@ -4,13 +4,15 @@
 
     $email = 'test@test.com';
 
-
     //validation
     $sql = "DELETE FROM user WHERE email = '$email'";
     
-    if ($conn->query($sql) === TRUE) {
+    if ($conn->query($sql) === TRUE)
+    {
         echo "test@test.com is deleted";
-    } else {
+    }
+    else
+    {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 
