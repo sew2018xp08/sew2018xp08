@@ -9,6 +9,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -44,13 +46,10 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_tutor_home_screen);
-
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+        setTitle("Home");
 
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        // specify an adapter (see also next example)
         ArrayList<String> places = new ArrayList<>(Arrays.asList("Analysis T1", "Betriebsysteme"));
         OfferListAdapter.RecyclerViewClickListener listener = (view, position) -> {
             Toast.makeText(view.getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
@@ -61,27 +60,27 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
 
         try {
             JSONArray jsonArrayOffers = new JSONArray(offersString);
-            for(int i = 0; i < jsonArrayOffers.length(); i++){
+            for (int i = 0; i < jsonArrayOffers.length(); i++) {
                 places.add(jsonArrayOffers.getJSONObject(i).getString("title"));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
-
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(oladapter);
 
 
-        Button btnLogout = findViewById(R.id.buttonLogout);
+        /*Button btnLogout = findViewById(R.id.buttonLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(TutorHomeScreenActivity.this, HomeActivity.class);
                 TutorHomeScreenActivity.this.startActivity(myIntent);
             }
-        });
+        });*/
 
         FloatingActionButton btnAdd = findViewById(R.id.buttonAdd);
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +90,24 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_custom_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logout_button:
+                startActivity(new Intent(this, LoginActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     public String getOffers(String tutorID) {
 
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
@@ -162,8 +179,6 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-    return null;
+        return null;
     }
-
-
 }

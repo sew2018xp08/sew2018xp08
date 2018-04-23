@@ -35,8 +35,7 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity
-            android:name=".TutorHomeScreenActivity"
-            android:theme="@style/CustomActionBar" />
+            android:name=".TutorHomeScreenActivity"/>
         <activity android:name=".CreateOfferActivity"/>
     </application>
 
