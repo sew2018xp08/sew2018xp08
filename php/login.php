@@ -13,8 +13,8 @@
     if ($stmt = $conn->prepare($sql))
     {
         $stmt->bind_param("ss", $email, $password);
-        $stmt->execute();   
-        $result = $stmt->get_result(); 
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result)
         {
@@ -36,5 +36,4 @@
     }
     /* close connection */
     $conn->close();
-
 ?>
