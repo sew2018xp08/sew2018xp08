@@ -13,9 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.educationaid.tutoring.Constants.Constants;
+import com.educationaid.tutoring.Model.User;
 import com.educationaid.tutoring.adapters.OfferListAdapter;
 
 
@@ -50,18 +52,20 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
 
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        ArrayList<String> places = new ArrayList<>(Arrays.asList("Analysis T1", "Betriebsysteme"));
+        ((TextView)findViewById(R.id.welcomeText)).setText("Hello " + HomeActivity.currentUser.getFirstName() + " " + HomeActivity.currentUser.getLastName() + ".");
+
+        ArrayList<String> offers = new ArrayList<>();
         OfferListAdapter.RecyclerViewClickListener listener = (view, position) -> {
             Toast.makeText(view.getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
         };
-        OfferListAdapter oladapter = new OfferListAdapter(places, listener);
+        OfferListAdapter oladapter = new OfferListAdapter(offers, listener);
 
-        String offersString = getOffers("1");
+        String offersString = getOffers(Integer.toString(HomeActivity.currentUser.getUserId()));
 
         try {
             JSONArray jsonArrayOffers = new JSONArray(offersString);
             for (int i = 0; i < jsonArrayOffers.length(); i++) {
-                places.add(jsonArrayOffers.getJSONObject(i).getString("title"));
+                offers.add(jsonArrayOffers.getJSONObject(i).getString("title"));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -72,15 +76,6 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(oladapter);
-
-
-        /*Button btnLogout = findViewById(R.id.buttonLogout);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent myIntent = new Intent(TutorHomeScreenActivity.this, HomeActivity.class);
-                TutorHomeScreenActivity.this.startActivity(myIntent);
-            }
-        });*/
 
         FloatingActionButton btnAdd = findViewById(R.id.buttonAdd);
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +96,8 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.logout_button:
-                startActivity(new Intent(this, LoginActivity.class));
+                HomeActivity.currentUser = new User();
+                startActivity(new Intent(this, HomeActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -118,14 +114,9 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
 
                 HttpClient httpClient = new DefaultHttpClient();
 
-                // In a POST request, we don't pass the values in the URL.
-                //Therefore we use only the web page URL as the parameter of the HttpPost argument
+
                 HttpPost httpPost = new HttpPost(Constants.PHP_VIEW_OFFER);
 
-                // Because we are not passing values over the URL, we should have a mechanism to pass the values that can be
-                //uniquely separate by the other end.
-                //To achieve that we use BasicNameValuePair
-                //Things we need to pass with the POST request
                 BasicNameValuePair tutorIDBasicNameValuePair = new BasicNameValuePair(Constants.POST_ID_UID, paramTutorID);
 
                 // We add the content that we want to pass with the POST request to as name-value pairs

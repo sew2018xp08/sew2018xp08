@@ -35,7 +35,13 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity
-            android:name=".TutorHomeScreenActivity"/>
+            android:name=".TutorHomeScreenActivity">
+            android:parentActivityName=".HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+
         <activity android:name=".CreateOfferActivity"/>
     </application>
 

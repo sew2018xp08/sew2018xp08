@@ -38,6 +38,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 ((Button) findViewById(R.id.btnLogin)).setVisibility(View.VISIBLE);
                 currentUser = new User();
                 ((TextView)findViewById(R.id.txtHomeText)).setText("Tutoring");
+                break;
         }
     }
 }
