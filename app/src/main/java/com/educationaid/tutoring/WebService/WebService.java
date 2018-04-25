@@ -19,7 +19,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WebService {
+public class WebService  {
+
     public static String Login(String paramEmail, String paramPassword) {
 
         HttpClient httpClient = new DefaultHttpClient();
