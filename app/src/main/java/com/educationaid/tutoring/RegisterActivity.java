@@ -68,8 +68,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             ((TextView)findViewById(R.id.lblErrorSurnameRegistry)).setVisibility(View.INVISIBLE);
         }
 
-        if(((TextView)findViewById(R.id.txtEmailRegistry)).getText().toString().equals("") ||
-                android.util.Patterns.EMAIL_ADDRESS.matcher(((TextView)findViewById(R.id.txtEmailRegistry)).getText().toString()).matches())
+        if(((TextView)findViewById(R.id.txtEmailRegistry)).getText().toString().equals(""))
         {
             ((TextView)findViewById(R.id.lblErrorEmailRegistry)).setVisibility(View.VISIBLE);
             return false;

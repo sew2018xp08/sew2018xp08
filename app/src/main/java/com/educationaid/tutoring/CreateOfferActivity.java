@@ -52,7 +52,7 @@ public class CreateOfferActivity extends AppCompatActivity {
                 if((!editTitle.getEditText().getText().toString().equals(""))
                         && !(descriptionTitle.getEditText().getText().toString().equals(""))){
                     // send database request
-                    insertOffer(editTitle.getEditText().getText().toString(),descriptionTitle.getEditText().getText().toString(),"1");
+                    insertOffer(editTitle.getEditText().getText().toString(),descriptionTitle.getEditText().getText().toString(),Integer.toString(HomeActivity.currentUser.getUserId()));
                     startActivity(new Intent(CreateOfferActivity.this, TutorHomeScreenActivity.class));
                 }
             }
@@ -69,7 +69,6 @@ public class CreateOfferActivity extends AppCompatActivity {
     }
 
     public void insertOffer(String title,String description, String tutorID) {
-        tutorID = "1";
 
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
 
