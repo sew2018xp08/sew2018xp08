@@ -6,32 +6,47 @@
     $title = $_POST['title'];
     $desc = $_POST['description'];
 
+
     //title + user exists already?
-    $sql = "SELECT * FROM offers WHERE u_id = '$u_id' and title = '$title'";
+    $sql = 'SELECT * FROM offers WHERE u_id = ? and title = ?';
 
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0)
+    /* prepare statement */
+    if ($stmt = $conn->prepare($sql))
     {
-        echo "Eintrag vom user ".$u_id." und titel ".$title." gibts schu";
-        
-    }
-    else
-    {
-        //Insert
-        $sql = "INSERT INTO offers (u_id, title, description)
-        VALUES ('$u_id', '$title', '$desc')";
+        $stmt->bind_param("is", $u_id, $title);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        //check succsess
-        if ($conn->query($sql) === TRUE)
+        if ($result)
         {
-            echo "New offer created successfully";
-        }
-        else
-        {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-    }
+            if ($result->num_rows > 0)
+            {
+                echo "Eintrag vom user ".$u_id." und titel ".$title." gibts schu";
+            }
+            else
+            {
+                //Insert
+                $sql2 = 'INSERT INTO offers (u_id, title, description)
+                      VALUES (?, ?, ?)';
 
+                /* prepare statement */
+                if ($stmt2 = $conn->prepare($sql2))
+                {
+                    $stmt2->bind_param("iss", $u_id, $title, $desc);
+
+                    if ($stmt2->execute())
+                    {
+                        echo "New offer created successfully";
+                    }
+                    else
+                    {
+                        echo "Error: " . $sql2 . "<br>" . $conn->error;
+                    }
+                    $stmt2->close();
+                }
+            }
+        }
+        $stmt->close();
+    }
     $conn->close();
 ?>

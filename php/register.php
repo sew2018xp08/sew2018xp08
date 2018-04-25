@@ -8,18 +8,24 @@
     $password = $_POST['password'];
 
     //Insert
-    $sql = "INSERT INTO user (first_name, last_name, email, password)
-    VALUES ('$firstname', '$lastname', '$email', '$password')";
+    $sql = 'INSERT INTO user (first_name, last_name, email, password, pro)
+        VALUES (?, ?, ?, ?, ?)';
 
-    //check succsess
-    if ($conn->query($sql) === TRUE)
+    /* prepare statement */
+    if ($stmt = $conn->prepare($sql))
     {
-        echo "New record created successfully";
-    }
-    else
-    {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
+        $stmt->bind_param("ssssi", $firstname, $lastname, $email, $password, $pro);
 
+        if ($stmt->execute())
+        {
+            echo "New record created successfully";
+        }
+        else
+        {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+        $stmt->close();
+    }
+    /* close connection */
     $conn->close();
 ?>
