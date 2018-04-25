@@ -12,7 +12,8 @@ import static org.junit.Assert.assertEquals;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class PHPWebserviceTest {
+public class PHPWebserviceTest  {
+
     @Test
     public void PHPLogin() throws Exception {
         String result = WebService.Login("john@example.com", "1234");
