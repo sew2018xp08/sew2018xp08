@@ -4,14 +4,25 @@
 
     $offer_id = $_POST['o_id'];
 
+    $offer_id = 5;
 
-    //validation
-    $sql = "DELETE FROM offers WHERE o_id = '$offer_id'";
-    
-    if ($conn->query($sql) === TRUE) {
-        echo "Offer Number ".$offer_id." is deleted";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+    //Insert
+    $sql = "DELETE FROM offers WHERE o_id = ?";
+
+    /* prepare statement */
+    if ($stmt = $conn->prepare($sql))
+    {
+        $stmt->bind_param("i", $offer_id);
+
+        if ($stmt->execute())
+        {
+            echo "Offer Number ".$offer_id." is deleted";
+        }
+        else
+        {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+        $stmt->close();
     }
 
     $conn->close();
