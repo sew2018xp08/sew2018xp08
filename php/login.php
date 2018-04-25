@@ -5,26 +5,33 @@
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    //validation
-    $sql = "SELECT u_id, first_name, last_name, email, admin FROM user WHERE email = '$email' and password = '$password'";
+    $sql = 'SELECT u_id, first_name, last_name, email, admin FROM user WHERE email = ? and password = ?';
 
-    $result = $conn->query($sql);
-    $user_data = array();
+    /* prepare statement */
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("ss", $email, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    if ($result)
-    {
-        if ($result->num_rows > 0)
+        if ($result)
         {
-            while($row = $result->fetch_array(MYSQL_ASSOC))
+            if ($result->num_rows > 0)
             {
-                $user_data[] = $row;
+                while($row = $result->fetch_assoc())
+                {
+                    $user_data[] = $row;
+                }
+                echo json_encode($user_data, JSON_UNESCAPED_UNICODE);
             }
-            echo json_encode($user_data, JSON_UNESCAPED_UNICODE);
+            else
+            {
+               echo "WRONG INPUT";
+            }
         }
-        else
-        {
-           echo "WRONG INPUT";
-        }
+
+        $stmt->close();
     }
+    /* close connection */
     $conn->close();
+
 ?>
