@@ -15,7 +15,7 @@
         android:layout_marginTop="84dp"
         android:ems="10"
         android:hint="max.mustermann@gmail.com"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
