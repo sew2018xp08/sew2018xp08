@@ -11,11 +11,16 @@ local.properties
 
 # Gradle generated files
 .gradle/
+app/gradle/
+app/gradlew
+app/gradlew.bat
+
 
 # Signing files
 .signing/
 
 # User-specific configurations
+app/.idea/
 .idea/libraries/
 .idea/codeStyles/
 .idea/workspace.xml
