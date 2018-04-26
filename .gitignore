@@ -1,5 +1,7 @@
+#PHPStorm
+php/.idea/*
 # Built application files
-/*/build/
+build/*
 
 # Crashlytics configuations
 com_crashlytics_export_strings.xml
@@ -15,6 +17,7 @@ local.properties
 
 # User-specific configurations
 .idea/libraries/
+.idea/codeStyles/
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/.name
