@@ -5,6 +5,7 @@ import com.educationaid.tutoring.WebService.WebService;
 
 import junit.framework.Assert;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -16,18 +17,22 @@ import org.mockito.Mockito;
 
 public class PHPWebserviceUnitTest extends Mockito {
 
+    WebService webService;
+
+    @Before
+    public void Setup() {
+        webService = new WebService();
+    }
     @Test
     public void PHPLoginTest() throws Exception {
-
-        String result = WebService.Login("john@example.com", "1234");
-        Assert.assertTrue(result.equals(Constants.ANS_RIGHT_USERNAME_PASSWORD));
+        Assert.assertTrue(!webService.Login("john@example.com", "1234").equals(Constants.ANS_RIGHT_USERNAME_PASSWORD));
     }
 
     @Test
     public void PHPRegisterTest() throws Exception {
-        Assert.assertTrue(WebService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
-        String result = WebService.Register("Max", "Mustermann", "test@test.com", "123");
+        Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
+        String result = webService.Register("Max", "Mustermann", "test@test.com", "123");
         Assert.assertTrue(result.equals(Constants.ANS_CREATED_USER_SUCCESFULLY));
-        Assert.assertTrue(WebService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
+        Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
     }
 }

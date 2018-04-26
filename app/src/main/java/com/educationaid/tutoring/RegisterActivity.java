@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             protected String doInBackground(String... params) {
-                return WebService.Register(params[0], params[1], params[2], params[3]);
+                return new WebService().Register(params[0], params[1], params[2], params[3]);
             }
             @Override
             protected void onPostExecute(String result) {
