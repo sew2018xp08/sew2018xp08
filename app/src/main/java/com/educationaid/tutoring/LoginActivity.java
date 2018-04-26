@@ -49,13 +49,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (clickedButton.getId()) {
             case R.id.btnLogin:
                 (findViewById(R.id.txtWarning)).setVisibility(View.INVISIBLE);
-                if ((((EditText) findViewById(R.id.txtUserName)).getText().toString()).equals("") || (((EditText) findViewById(R.id.txtPassword)).getText().toString()).equals("")
-                        || (!(((EditText) findViewById(R.id.txtUserName)).getText().toString()).contains("@"))) {
+                if((((EditText)findViewById(R.id.txtUserName)).getText().toString()).equals("") || (((EditText) findViewById(R.id.txtPassword)).getText().toString()).equals("")
+                        || (!(((EditText)findViewById(R.id.txtUserName)).getText().toString()).contains("@")))
+                {
                     (findViewById(R.id.txtWarning)).setVisibility(View.VISIBLE);
                     break;
                 }
 
-                doLogin(((EditText) findViewById(R.id.txtUserName)).getText().toString(), ((EditText) findViewById(R.id.txtPassword)).getText().toString());
+                doLogin(((EditText)findViewById(R.id.txtUserName)).getText().toString(), ((EditText)findViewById(R.id.txtPassword)).getText().toString());
 
                 break;
             case R.id.btnRegister:
