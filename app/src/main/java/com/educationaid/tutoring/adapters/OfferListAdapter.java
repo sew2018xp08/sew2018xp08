@@ -1,5 +1,7 @@
 package com.educationaid.tutoring.adapters;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.educationaid.tutoring.R;
+import com.educationaid.tutoring.TutorHomeScreenActivity;
 
 import java.util.List;
 
@@ -55,12 +58,22 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
         String a = itemList.get(position);
         holder.text.setText(a);
 
-        holder.imgButton.setOnClickListener(v -> Toast.makeText(v.getContext(), "Delete position " + position, Toast.LENGTH_SHORT).show());
+        holder.imgButton.setOnClickListener(v -> showConfirmationDialog(v));
         holder.text.setOnClickListener(v -> Toast.makeText(v.getContext(), "Position " + position, Toast.LENGTH_SHORT).show());
     }
 
     @Override
     public int getItemCount() {
         return itemList.size();
+    }
+
+    private void showConfirmationDialog(View v) {
+        new AlertDialog.Builder(v.getContext())
+                .setTitle("Confirmation")
+                .setMessage("Do you really want to delete this item?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, (dialog, whichButton)
+                        -> Toast.makeText(v.getContext(), "The item was deleted.", Toast.LENGTH_SHORT).show())
+                .setNegativeButton(android.R.string.no, null).show();
     }
 }
