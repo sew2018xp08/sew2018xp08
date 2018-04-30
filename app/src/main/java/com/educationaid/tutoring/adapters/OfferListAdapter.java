@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,13 +23,13 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView text;
+        public ImageButton imgButton;
 
-
-        public MyViewHolder(View view, RecyclerViewClickListener listener) {
+        public MyViewHolder(View view) {
             super(view);
             view.setOnClickListener(this);
-            mListener = listener;
             text = view.findViewById(R.id.offerTitle);
+            imgButton = view.findViewById(R.id.button_delete);
         }
 
         @Override
@@ -38,22 +39,24 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
     }
 
 
-    public OfferListAdapter(List<String> itemList, RecyclerViewClickListener listener) {
+    public OfferListAdapter(List<String> itemList) {
         this.itemList = itemList;
-        this.mListener = listener;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.textview_offer_item, parent, false);
-        return new MyViewHolder(itemView, mListener);
+        return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         String a = itemList.get(position);
         holder.text.setText(a);
+
+        holder.imgButton.setOnClickListener(v -> Toast.makeText(v.getContext(), "Delete position " + position, Toast.LENGTH_SHORT).show());
+        holder.text.setOnClickListener(v -> Toast.makeText(v.getContext(), "Position " + position, Toast.LENGTH_SHORT).show());
     }
 
     @Override

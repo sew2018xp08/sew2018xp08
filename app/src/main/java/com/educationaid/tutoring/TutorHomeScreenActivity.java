@@ -1,6 +1,7 @@
 package com.educationaid.tutoring;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,7 +60,7 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
         OfferListAdapter.RecyclerViewClickListener listener = (view, position) -> {
             Toast.makeText(view.getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
         };
-        OfferListAdapter oladapter = new OfferListAdapter(offers, listener);
+        OfferListAdapter oladapter = new OfferListAdapter(offers);
 
         String offersString = getOffers(Integer.toString(HomeActivity.currentUser.getUserId()));
 
@@ -71,18 +73,15 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(oladapter);
 
         FloatingActionButton btnAdd = findViewById(R.id.buttonAdd);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent myIntent = new Intent(TutorHomeScreenActivity.this, CreateOfferActivity.class);
-                TutorHomeScreenActivity.this.startActivity(myIntent);
-            }
+        btnAdd.setOnClickListener(v -> {
+            Intent myIntent = new Intent(TutorHomeScreenActivity.this, CreateOfferActivity.class);
+            TutorHomeScreenActivity.this.startActivity(myIntent);
         });
     }
 
@@ -165,6 +164,75 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
         SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
         try {
             return sendPostReqAsyncTask.execute(tutorID).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String deleteOffer(String offerID) {
+
+        class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
+            @Override
+            protected String doInBackground(String... params) {
+                String resturn_statement;
+                String paramTutorID = params[0];
+
+                HttpClient httpClient = new DefaultHttpClient();
+
+
+                HttpPost httpPost = new HttpPost(Constants.PHP_DELETE_OFFER);
+
+                BasicNameValuePair tutorIDBasicNameValuePair = new BasicNameValuePair(Constants.POST_ID_UID, paramTutorID);
+
+                // We add the content that we want to pass with the POST request to as name-value pairs
+                //Now we put those sending details to an ArrayList with type safe of NameValuePair
+                List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
+                nameValuePairList.add(tutorIDBasicNameValuePair);
+
+                try {
+                    // UrlEncodedFormEntity is an entity composed of a list of url-encoded pairs.
+                    //This is typically useful while sending an HTTP POST request.
+                    UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(nameValuePairList);
+
+                    // setEntity() hands the entity (here it is urlEncodedFormEntity) to the request.
+                    httpPost.setEntity(urlEncodedFormEntity);
+
+                    try {
+                        // HttpResponse is an interface just like HttpPost.
+                        //Therefore we can't initialize them
+                        HttpResponse httpResponse = httpClient.execute(httpPost);
+                        HttpEntity entity = httpResponse.getEntity();
+                        resturn_statement = EntityUtils.toString(entity).toString();
+                        return resturn_statement;
+
+                    } catch (ClientProtocolException cpe) {
+                        System.out.println("First Exception caz of HttpResponese :" + cpe);
+                        cpe.printStackTrace();
+                    } catch (IOException ioe) {
+                        System.out.println("Second Exception caz of HttpResponse :" + ioe);
+                        ioe.printStackTrace();
+                    }
+
+                } catch (UnsupportedEncodingException uee) {
+                    System.out.println("An Exception given because of UrlEncodedFormEntity argument :" + uee);
+                    uee.printStackTrace();
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+            }
+        }
+
+        SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
+        try {
+            return sendPostReqAsyncTask.execute(offerID).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
