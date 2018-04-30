@@ -58,7 +58,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
         String a = itemList.get(position);
         holder.text.setText(a);
 
-        holder.imgButton.setOnClickListener(v -> showConfirmationDialog(v));
+        holder.imgButton.setOnClickListener(this::showConfirmationDialog);
         holder.text.setOnClickListener(v -> Toast.makeText(v.getContext(), "Position " + position, Toast.LENGTH_SHORT).show());
     }
 
