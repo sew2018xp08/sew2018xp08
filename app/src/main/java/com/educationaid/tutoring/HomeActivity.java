@@ -1,51 +1,69 @@
 package com.educationaid.tutoring;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Space;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.educationaid.tutoring.Constants.Constants;
 import com.educationaid.tutoring.Model.User;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
     public static User currentUser = new User();
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.btnMenuLogin:
+                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                return true;
+            case R.id.btnMenuLogout:
+                currentUser = new User();
+                startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+                return true;
+            case R.id.btnMenuTutorHomeView:
+                startActivity(new Intent(HomeActivity.this, TutorHomeScreenActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(currentUser.getAdmin() == Constants.NOT_LOGGED_IN ? R.menu.menu_home_view_unlogged : R.menu.menu_home_view_loggedin, menu);
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         System.out.println(currentUser.getUserId());
-        ((Button)findViewById(R.id.btnLogin)).setOnClickListener(this);
-
         getOffers();
     }
 
@@ -68,12 +86,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(Constants.PHP_VIEW_ALL_OFFERS);
                     try {
-                        // HttpResponse is an interface just like HttpPost.
-                        //Therefore we can't initialize them
                         HttpResponse httpResponse = httpClient.execute(httpPost);
 
-                        // According to the JAVA API, InputStream constructor do nothing.
-                        //So we can't initialize InputStream although it is not an interface
                         InputStream inputStream = httpResponse.getEntity().getContent();
 
                         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -110,6 +124,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                         JSONArray obj = new JSONArray(result);
                         System.out.println("Hei sweetty <3");
 
+                        TableLayout table = new TableLayout(HomeActivity.this);
+                        TableLayout.LayoutParams tableRowParams=
+                                new TableLayout.LayoutParams
+                                        (TableLayout.LayoutParams.FILL_PARENT,TableLayout.LayoutParams.FILL_PARENT);
+                        tableRowParams.setMargins(0,10,0,10);
+                        table.setLayoutParams(tableRowParams);
+                        table.setBackgroundColor(Color.LTGRAY);
+
                         LinearLayout linearLayout = new LinearLayout(HomeActivity.this);
                         setContentView(linearLayout);
                         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -118,12 +140,31 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                         txtOffers.setTextSize(30);
                         txtOffers.setText("Offers");
                         linearLayout.addView(txtOffers);
+
+
                         for(int i = 0; i < obj.length(); i++)
                         {
-                            TextView textView = new TextView(HomeActivity.this);
-                            textView.setText(obj.getJSONObject(i).getString("title") + " - " + obj.getJSONObject(i).getString("first_name") + " " + obj.getJSONObject(i).getString("last_name"));
-                            linearLayout.addView(textView);
+                            TableRow row = new TableRow(HomeActivity.this);
+                            row.setBackgroundColor(((i%2) == 0) ? Color.DKGRAY : Color.GRAY);
+                            row.setLayoutParams(tableRowParams);
+                            for(int j = 0; j < 3; j++) {
+                                TextView tv = new TextView(HomeActivity.this);
+                                tv.setTextSize(15);
+                                if(j == 1) {
+                                    tv.setText("         |         ");
+                                    row.addView(tv);
+                                    continue;
+                                }
+                                tv.setText(j == 0 ? obj.getJSONObject(i).getString("title") : obj.getJSONObject(i).getString("first_name") + " " + obj.getJSONObject(i).getString("last_name"));
+                                row.addView(tv);
+                            }
+                            table.addView(row);
+
+                            //TextView textView = new TextView(HomeActivity.this);
+                            //textView.setText(obj.getJSONObject(i).getString("title") + " - " + obj.getJSONObject(i).getString("first_name") + " " + obj.getJSONObject(i).getString("last_name"));
+                            //linearLayout.addView(textView);
                         }
+                        linearLayout.addView(table);
 
                         HomeActivity.currentUser = new User(Integer.valueOf(obj.getJSONObject(0).getString("u_id")), obj.getJSONObject(0).getString("first_name"),
                                 obj.getJSONObject(0).getString("last_name"), obj.getJSONObject(0).getString("email"),
