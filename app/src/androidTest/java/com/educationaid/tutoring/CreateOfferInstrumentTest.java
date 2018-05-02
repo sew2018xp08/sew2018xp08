@@ -37,31 +37,27 @@ public class CreateOfferInstrumentTest {
 
         assertEquals("com.educationaid.tutoring", appContext.getPackageName());
     }
-
-    @Test
-    public void clickBackButton() throws  Exception {
-        onView(withId(R.id.back_button)).perform(click());
-    }
+    
     @Test
     public void clickAddButton() throws  Exception {
-        onView(withId(R.id.add_button)).perform(click());
+        onView(withId(R.id.btnMenuAdd)).perform(click());
     }
     @Test
     public void addAOffer() throws  Exception {
         onView(withId(R.id.title_label)).perform(typeText("Analysis 1"));
         onView(withId(R.id.descripiton_label)).perform(typeText("Nachhilfestunde Montags 9:00 im LZ 2"));
-        onView(withId(R.id.add_button)).perform(click());
+        onView(withId(R.id.btnMenuAdd)).perform(click());
     }
 
     @Test
     public void addAOfferWithoutDescription() throws  Exception {
         onView(withId(R.id.title_label)).perform(typeText("Analysis 1"));
-        onView(withId(R.id.add_button)).perform(click());
+        onView(withId(R.id.btnMenuAdd)).perform(click());
     }
     @Test
     public void addAOfferWithoutTitle() throws  Exception {
         onView(withId(R.id.descripiton_label)).perform(typeText("Nachhilfestunde Montags 9:00 im LZ 2"));
-        onView(withId(R.id.add_button)).perform(click());
+        onView(withId(R.id.btnMenuAdd)).perform(click());
     }
 
 
