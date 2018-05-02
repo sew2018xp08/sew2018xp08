@@ -5,12 +5,16 @@ import android.os.AsyncTask;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.educationaid.tutoring.Constants.Constants;
+import com.educationaid.tutoring.Model.User;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -32,43 +36,45 @@ import java.util.List;
 public class CreateOfferActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_offer);
-
-        final Button addButton = (Button) findViewById(R.id.add_button);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-                public void onClick(View v){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.btnMenuAdd:
                 final TextInputLayout editTitle = (TextInputLayout) findViewById(R.id.title_text);
                 final TextInputLayout descriptionTitle = (TextInputLayout) findViewById(R.id.description_text);
 
-                if(editTitle.getEditText().getText().toString().equals("")){
+                if (editTitle.getEditText().getText().toString().equals("")) {
                     editTitle.setError("No Title");
                 }
-                if(descriptionTitle.getEditText().getText().toString().equals("")){
+                if (descriptionTitle.getEditText().getText().toString().equals("")) {
                     descriptionTitle.setError("No Description");
                 }
-                if((!editTitle.getEditText().getText().toString().equals(""))
-                        && !(descriptionTitle.getEditText().getText().toString().equals(""))){
+                if ((!editTitle.getEditText().getText().toString().equals(""))
+                        && !(descriptionTitle.getEditText().getText().toString().equals(""))) {
                     // send database request
-                    insertOffer(editTitle.getEditText().getText().toString(),descriptionTitle.getEditText().getText().toString(),Integer.toString(HomeActivity.currentUser.getUserId()));
+                    insertOffer(editTitle.getEditText().getText().toString(), descriptionTitle.getEditText().getText().toString(), Integer.toString(HomeActivity.currentUser.getUserId()));
                     startActivity(new Intent(CreateOfferActivity.this, TutorHomeScreenActivity.class));
                 }
-            }
-        });
-        final Button backButton = (Button) findViewById(R.id.back_button);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(CreateOfferActivity.this, TutorHomeScreenActivity.class));
-
-            }
-        });
-
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
-    public void insertOffer(String title,String description, String tutorID) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_create_offer, menu);
+        return true;
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_offer);
+    }
+
+    public void insertOffer(String title, String description, String tutorID) {
 
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
 
@@ -125,7 +131,7 @@ public class CreateOfferActivity extends AppCompatActivity {
 
                         String bufferedStrChunk = null;
 
-                        while((bufferedStrChunk = bufferedReader.readLine()) != null){
+                        while ((bufferedStrChunk = bufferedReader.readLine()) != null) {
                             stringBuilder.append(bufferedStrChunk);
                         }
 
@@ -151,16 +157,16 @@ public class CreateOfferActivity extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
 
-                if(result.equals(Constants.ANS_RIGHT_USERNAME_PASSWORD)){
+                if (result.equals(Constants.ANS_RIGHT_USERNAME_PASSWORD)) {
                     startActivity(new Intent(CreateOfferActivity.this, TutorHomeScreenActivity.class));
-                }else{
+                } else {
                     System.out.println("Invalid POST req...");
                 }
             }
         }
 
         SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
-        sendPostReqAsyncTask.execute(tutorID,title, description);
+        sendPostReqAsyncTask.execute(tutorID, title, description);
     }
 
 }
