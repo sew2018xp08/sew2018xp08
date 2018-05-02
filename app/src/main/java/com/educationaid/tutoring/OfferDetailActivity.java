@@ -45,7 +45,6 @@ public class OfferDetailActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.txtDescriptionDetail)).setText(obj.getJSONObject(0).getString("description"));
     }
 
-
     public void getOffer(String offerid) {
 
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
