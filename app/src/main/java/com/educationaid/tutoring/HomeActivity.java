@@ -42,7 +42,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             case R.id.btnMenuLogout:
                 currentUser = new User();
-                startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+                //startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+                Intent refresh = new Intent(this, HomeActivity.class);
+                startActivity(refresh);
+                this.finish();
                 return true;
             case R.id.btnMenuTutorHomeView:
                 startActivity(new Intent(HomeActivity.this, TutorHomeScreenActivity.class));
