@@ -9,6 +9,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
@@ -57,13 +58,15 @@ public class LoginInstrumentedTest {
     public void checkWrongLogin() {
         onView(withId(R.id.txtUserName)).perform(typeText("john@exampleWrong.com"));
         onView(withId(R.id.txtPassword)).perform(typeText("1234"));
+        closeSoftKeyboard();
         onView(withId(R.id.btnLogin)).perform(click());
     }
 
     @Test
-    public void checkRightLogin() {
+    public void checkRightLogin() throws InterruptedException {
         onView(withId(R.id.txtUserName)).perform(typeText("john@example.com"));
         onView(withId(R.id.txtPassword)).perform(typeText("1234"));
+        closeSoftKeyboard();
         onView(withId(R.id.btnLogin)).perform(click());
     }
 }

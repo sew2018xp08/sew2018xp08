@@ -23,13 +23,14 @@ public class PHPWebserviceUnitTest extends Mockito {
     public void Setup() {
         webService = new WebService();
     }
+
     @Test
-    public void PHPLoginTest() throws Exception {
+    public void phpLoginTest() throws Exception {
         Assert.assertTrue(!webService.Login("john@example.com", "1234").equals(Constants.ANS_RIGHT_USERNAME_PASSWORD));
     }
 
     @Test
-    public void PHPRegisterTest() throws Exception {
+    public void phpRegisterTest() throws Exception {
         Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
         String result = webService.Register("Max", "Mustermann", "test@test.com", "123");
         Assert.assertTrue(result.equals(Constants.ANS_CREATED_USER_SUCCESFULLY));

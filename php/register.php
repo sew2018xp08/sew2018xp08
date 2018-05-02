@@ -6,7 +6,7 @@
     $lastname = $_POST['lastname'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-
+    $pro = false;
     //Insert
     $sql = 'INSERT INTO user (first_name, last_name, email, password, pro)
         VALUES (?, ?, ?, ?, ?)';

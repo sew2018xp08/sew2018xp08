@@ -55,8 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             protected String doInBackground(String... params) {
-                new WebService().Login(params[0], params[1]);
-                return null;
+                return new WebService().Login(params[0], params[1]);
             }
 
             @Override
