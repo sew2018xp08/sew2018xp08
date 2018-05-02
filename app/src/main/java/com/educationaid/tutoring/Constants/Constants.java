@@ -12,6 +12,7 @@ public class Constants {
     public static String PHP_NEW_OFFER = "http://sew2018xp08.bplaced.net/PHP/new_offer.php";
     public static String PHP_VIEW_OFFER = "http://sew2018xp08.bplaced.net/PHP/view_offers.php";
     public static String PHP_VIEW_ALL_OFFERS = "http://sew2018xp08.bplaced.net/PHP/view_all_offers.php";
+    public static String PHP_GET_OFFER_BY_OFFERID = "http://sew2018xp08.bplaced.net/PHP/get_offer_by_offerid.php";
 
 
     //POST IDs
@@ -22,6 +23,7 @@ public class Constants {
     public static String POST_ID_UID = "tutorID";
     public static String POST_ID_OFFER_TITLE= "title";
     public static String POST_ID_OFFER_DESCRIPTION = "description";
+    public static String POST_ID_OFFERID = "offerID";
 
 
     //SERVER ANSWER - EQUALS

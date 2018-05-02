@@ -89,7 +89,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 for(TableRow row : offers_in_table_) {
                     if(v.getId() == row.getId()) {
                         System.out.println(row.getId());
-                        String miael = "miael du nutte";
+                        Intent intent = new Intent(HomeActivity.this, OfferDetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("offerid", row.getId());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        break;
                     }
                 }
         }
