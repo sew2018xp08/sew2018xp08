@@ -14,6 +14,7 @@ import android.widget.Space;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.educationaid.tutoring.Constants.Constants;
 import com.educationaid.tutoring.Model.User;
@@ -30,9 +31,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
     public static User currentUser = new User();
+    private static ArrayList<TableRow> offers_in_table_;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -42,7 +45,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             case R.id.btnMenuLogout:
                 currentUser = new User();
-                //startActivity(new Intent(HomeActivity.this, HomeActivity.class));
                 Intent refresh = new Intent(this, HomeActivity.class);
                 startActivity(refresh);
                 this.finish();
@@ -67,7 +69,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         System.out.println(currentUser.getUserId());
+        offers_in_table_ = new ArrayList<>();
         getOffers();
+    }
+
+    private void setRowListener() {
+        for(TableRow row : offers_in_table_) {
+            row.setOnClickListener(this);
+        }
     }
 
     @Override
@@ -76,6 +85,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnLogin:
                     startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                 break;
+            default:
+                for(TableRow row : offers_in_table_) {
+                    if(v.getId() == row.getId()) {
+                        System.out.println(row.getId());
+                        String miael = "miael du nutte";
+                    }
+                }
         }
     }
 
@@ -148,6 +164,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                         for(int i = 0; i < obj.length(); i++)
                         {
                             TableRow row = new TableRow(HomeActivity.this);
+                            row.setClickable(true);
+                            row.setId(Integer.parseInt(obj.getJSONObject(i).getString("o_id")));
                             row.setBackgroundColor(((i%2) == 0) ? Color.DKGRAY : Color.GRAY);
                             row.setLayoutParams(tableRowParams);
                             for(int j = 0; j < 3; j++) {
@@ -160,14 +178,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                                 }
                                 tv.setText(j == 0 ? obj.getJSONObject(i).getString("title") : obj.getJSONObject(i).getString("first_name") + " " + obj.getJSONObject(i).getString("last_name"));
                                 row.addView(tv);
+                                offers_in_table_.add(row);
                             }
                             table.addView(row);
-
-                            //TextView textView = new TextView(HomeActivity.this);
-                            //textView.setText(obj.getJSONObject(i).getString("title") + " - " + obj.getJSONObject(i).getString("first_name") + " " + obj.getJSONObject(i).getString("last_name"));
-                            //linearLayout.addView(textView);
                         }
                         linearLayout.addView(table);
+                        setRowListener();
 
                         HomeActivity.currentUser = new User(Integer.valueOf(obj.getJSONObject(0).getString("u_id")), obj.getJSONObject(0).getString("first_name"),
                                 obj.getJSONObject(0).getString("last_name"), obj.getJSONObject(0).getString("email"),
