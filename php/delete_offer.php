@@ -14,11 +14,13 @@
 
         if ($stmt->execute())
         {
-            echo "Offer Number ".$offer_id." is deleted";
+            echo "false";
+            //echo "Offer Number ".$offer_id." is deleted";
         }
         else
         {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+            echo "true";
+            //echo "Error: " . $sql . "<br>" . $conn->error;
         }
         $stmt->close();
     }
