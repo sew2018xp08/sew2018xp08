@@ -68,4 +68,12 @@ public class WebService {
     public String DeleteTestUserFromDataBase() {
         return ExecuteResultToString(new HttpPost(Constants.PHP_TEST_DELETE_USER));
     }
+
+    public String DeleteOffer(String offerId) {
+        HttpPost httpPost = new HttpPost(Constants.PHP_DELETE_OFFER);
+        SetEntity(httpPost, Arrays.asList(
+                new BasicNameValuePair(Constants.POST_ID_OFFER_ID, offerId)
+        ));
+        return ExecuteResultToString(httpPost);
+    }
 }

@@ -167,10 +167,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                             //linearLayout.addView(textView);
                         }
                         linearLayout.addView(table);
-
-                        HomeActivity.currentUser = new User(Integer.valueOf(obj.getJSONObject(0).getString("u_id")), obj.getJSONObject(0).getString("first_name"),
-                                obj.getJSONObject(0).getString("last_name"), obj.getJSONObject(0).getString("email"),
-                                Integer.valueOf(obj.getJSONObject(0).getString("admin")));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

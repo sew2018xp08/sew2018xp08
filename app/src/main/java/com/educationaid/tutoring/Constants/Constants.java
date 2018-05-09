@@ -21,7 +21,8 @@ public class Constants {
     public static String POST_ID_FIRSTNAME = "firstname";
     public static String POST_ID_LASTNAME = "lastname";
     public static String POST_ID_UID = "tutorID";
-    public static String POST_ID_OFFER_TITLE= "title";
+    public static String POST_ID_OFFER_TITLE = "title";
+    public static String POST_ID_OFFER_ID = "o_id";
     public static String POST_ID_OFFER_DESCRIPTION = "description";
 
 

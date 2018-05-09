@@ -3,6 +3,7 @@ package com.educationaid.tutoring.adapters;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +13,16 @@ import android.widget.Toast;
 
 import com.educationaid.tutoring.R;
 import com.educationaid.tutoring.TutorHomeScreenActivity;
+import com.educationaid.tutoring.WebService.WebService;
 
 import java.util.List;
+import java.util.Map;
 
 public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyViewHolder>{
 
-    private List<String> itemList;
+    private List<Pair<String, String>> itemList;
     private RecyclerViewClickListener mListener;
+    private View activityView;
 
     public interface RecyclerViewClickListener {
         void onClick(View view, int position);
@@ -42,8 +46,9 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
     }
 
 
-    public OfferListAdapter(List<String> itemList) {
+    public OfferListAdapter(View view, List<Pair<String, String>> itemList) {
         this.itemList = itemList;
+        this.activityView = view;
     }
 
     @Override
@@ -55,10 +60,15 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        String a = itemList.get(position);
-        holder.text.setText(a);
+        Pair<String, String> item = itemList.get(position);
+        holder.text.setText(item.second);
 
-        holder.imgButton.setOnClickListener(this::showConfirmationDialog);
+        holder.imgButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showConfirmationDialog(activityView, item.first, position);
+            }
+        });
         holder.text.setOnClickListener(v -> Toast.makeText(v.getContext(), "Position " + position, Toast.LENGTH_SHORT).show());
     }
 
@@ -67,13 +77,21 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
         return itemList.size();
     }
 
-    private void showConfirmationDialog(View v) {
+    private void showConfirmationDialog(View v, String id, int position) {
         new AlertDialog.Builder(v.getContext())
                 .setTitle("Confirmation")
                 .setMessage("Do you really want to delete this item?")
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.yes, (dialog, whichButton)
-                        -> Toast.makeText(v.getContext(), "The item was deleted.", Toast.LENGTH_SHORT).show())
+                        -> {
+                    if (new WebService().DeleteOffer(id).equals("true")) {
+                        itemList.remove(position);
+                        Toast.makeText(v.getContext(), "Item deleted.", Toast.LENGTH_LONG).show();
+                        this.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(v.getContext(), "Error: Item not deleted!", Toast.LENGTH_LONG).show();
+                    }
+                })
                 .setNegativeButton(android.R.string.no, null).show();
     }
 }

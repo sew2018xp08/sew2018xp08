@@ -36,4 +36,9 @@ public class PHPWebserviceUnitTest extends Mockito {
         Assert.assertTrue(result.equals(Constants.ANS_CREATED_USER_SUCCESFULLY));
         Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
     }
+
+    @Test
+    public void phpCreateDeleteOfferTest() throws Exception {
+        //Assert.assertTrue(!webService.Login("john@example.com", "1234").equals(Constants.ANS_RIGHT_USERNAME_PASSWORD));
+    }
 }
