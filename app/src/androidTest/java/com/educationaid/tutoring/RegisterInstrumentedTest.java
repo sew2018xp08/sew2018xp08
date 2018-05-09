@@ -93,8 +93,8 @@ public class RegisterInstrumentedTest {
         closeSoftKeyboard();
         onView(withId(R.id.btnRegistry)).perform(scrollTo(), click());
 
-
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+        onView(withText("Login")).check(matches(isDisplayed()));
         onView(withText("Login")).check(matches(isDisplayed()));
         onView(withText("Login")).perform(click());
         onView(withId(R.id.btnRegister)).perform(click());
