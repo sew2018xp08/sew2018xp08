@@ -50,7 +50,8 @@ public class CreateOfferActivity extends AppCompatActivity {
                     descriptionTitle.setError("No Description");
                 }
                 if((!editTitle.getEditText().getText().toString().equals(""))
-                        && !(descriptionTitle.getEditText().getText().toString().equals(""))){
+                        && !(descriptionTitle.getEditText().getText().toString().equals(""))
+                        && HomeActivity.currentUser != null){
                     // send database request
                     insertOffer(editTitle.getEditText().getText().toString(),descriptionTitle.getEditText().getText().toString(),Integer.toString(HomeActivity.currentUser.getUserId()));
                     startActivity(new Intent(CreateOfferActivity.this, TutorHomeScreenActivity.class));

@@ -46,6 +46,7 @@ public class RegisterInstrumentedTest {
     public void Init()
     {
         webService = new WebService();
+        HomeActivity.currentUser = null;
     }
     @Rule
     public ActivityTestRule<RegistryActivity> mActivityRule = new

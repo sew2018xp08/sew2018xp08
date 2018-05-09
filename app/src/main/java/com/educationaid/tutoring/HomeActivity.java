@@ -32,7 +32,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
-    public static User currentUser = new User();
+    public static User currentUser;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -41,7 +41,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                 return true;
             case R.id.btnMenuLogout:
-                currentUser = new User();
+                currentUser = null;
                 //startActivity(new Intent(HomeActivity.this, HomeActivity.class));
                 Intent refresh = new Intent(this, HomeActivity.class);
                 startActivity(refresh);
@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(currentUser.getAdmin() == Constants.NOT_LOGGED_IN ? R.menu.menu_home_view_unlogged : R.menu.menu_home_view_loggedin, menu);
+        inflater.inflate(currentUser == null ? R.menu.menu_home_view_unlogged : R.menu.menu_home_view_loggedin, menu);
         return true;
     }
 
@@ -66,7 +66,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        System.out.println(currentUser.getUserId());
         getOffers();
     }
 
