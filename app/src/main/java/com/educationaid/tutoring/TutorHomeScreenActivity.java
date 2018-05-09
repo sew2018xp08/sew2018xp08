@@ -56,22 +56,12 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
 
         ((TextView)findViewById(R.id.welcomeText)).setText("Hello " + HomeActivity.currentUser.getFirstName() + " " + HomeActivity.currentUser.getLastName() + ".");
 
-        ArrayList<String> offers = new ArrayList<>();
         OfferListAdapter.RecyclerViewClickListener listener = (view, position) -> {
             Toast.makeText(view.getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
         };
+
+        ArrayList<String> offers = buildList();
         OfferListAdapter oladapter = new OfferListAdapter(offers);
-
-        String offersString = getOffers(Integer.toString(HomeActivity.currentUser.getUserId()));
-
-        try {
-            JSONArray jsonArrayOffers = new JSONArray(offersString);
-            for (int i = 0; i < jsonArrayOffers.length(); i++) {
-                offers.add(jsonArrayOffers.getJSONObject(i).getString("title"));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -83,6 +73,22 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
             Intent myIntent = new Intent(TutorHomeScreenActivity.this, CreateOfferActivity.class);
             TutorHomeScreenActivity.this.startActivity(myIntent);
         });
+    }
+
+    public ArrayList<String> buildList() {
+        String offersString = getOffers(Integer.toString(HomeActivity.currentUser.getUserId()));
+        ArrayList<String> offers = new ArrayList<String>();
+
+        try {
+            JSONArray jsonArrayOffers = new JSONArray(offersString);
+            for (int i = 0; i < jsonArrayOffers.length(); i++) {
+                offers.add(jsonArrayOffers.getJSONObject(i).getString("title"));
+            }
+            return offers;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -178,14 +184,14 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
                 String resturn_statement;
-                String paramTutorID = params[0];
+                String offerID = params[0];
 
                 HttpClient httpClient = new DefaultHttpClient();
 
 
                 HttpPost httpPost = new HttpPost(Constants.PHP_DELETE_OFFER);
 
-                BasicNameValuePair tutorIDBasicNameValuePair = new BasicNameValuePair(Constants.POST_ID_UID, paramTutorID);
+                BasicNameValuePair tutorIDBasicNameValuePair = new BasicNameValuePair(Constants.POST_ID_UID, offerID);
 
                 // We add the content that we want to pass with the POST request to as name-value pairs
                 //Now we put those sending details to an ArrayList with type safe of NameValuePair
