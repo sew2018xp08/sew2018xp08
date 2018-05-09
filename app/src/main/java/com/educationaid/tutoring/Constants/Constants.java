@@ -24,12 +24,14 @@ public class Constants {
     public static String POST_ID_OFFER_TITLE= "title";
     public static String POST_ID_OFFER_DESCRIPTION = "description";
     public static String POST_ID_OFFERID = "offerID";
+    public static String POST_ID_PRICE = "price";
 
 
     //SERVER ANSWER - EQUALS
     public static String ANS_CREATED_USER_SUCCESFULLY = "New record created successfully";
     public static String ANS_RIGHT_USERNAME_PASSWORD = "WRONG INPUT";
     public static String ANS_DELETE_USER = "test@test.com is deleted";
+    public static String ANS_CREATE_OFFER = "New offer created successfully";
 
     public static int NOT_LOGGED_IN = 0;
 }

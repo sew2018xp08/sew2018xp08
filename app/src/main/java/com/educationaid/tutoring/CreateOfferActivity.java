@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.educationaid.tutoring.Constants.Constants;
 import com.educationaid.tutoring.Model.User;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreateOfferActivity extends AppCompatActivity {
+    private String price = null;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -41,6 +43,7 @@ public class CreateOfferActivity extends AppCompatActivity {
             case R.id.btnMenuAdd:
                 final TextInputLayout editTitle = (TextInputLayout) findViewById(R.id.title_text);
                 final TextInputLayout descriptionTitle = (TextInputLayout) findViewById(R.id.description_text);
+                final TextInputLayout priceTitle = (TextInputLayout) findViewById(R.id.price_text);
 
                 if (editTitle.getEditText().getText().toString().equals("")) {
                     editTitle.setError("No Title");
@@ -51,8 +54,8 @@ public class CreateOfferActivity extends AppCompatActivity {
                 if ((!editTitle.getEditText().getText().toString().equals(""))
                         && !(descriptionTitle.getEditText().getText().toString().equals(""))) {
                     // send database request
+                    price = priceTitle.getEditText().getText().toString();
                     insertOffer(editTitle.getEditText().getText().toString(), descriptionTitle.getEditText().getText().toString(), Integer.toString(HomeActivity.currentUser.getUserId()));
-                    startActivity(new Intent(CreateOfferActivity.this, TutorHomeScreenActivity.class));
                 }
                 return true;
             default:
@@ -76,7 +79,7 @@ public class CreateOfferActivity extends AppCompatActivity {
 
     public void insertOffer(String title, String description, String tutorID) {
 
-        class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
+        class SendPostReqAsyncTask extends AsyncTask<String, String, String> {
 
             @Override
             protected String doInBackground(String... params) {
@@ -84,43 +87,32 @@ public class CreateOfferActivity extends AppCompatActivity {
                 String paramTutorID = params[0];
                 String paramTitle = params[1];
                 String paramDescription = params[2];
+                String paramPrice = price;
 
                 HttpClient httpClient = new DefaultHttpClient();
 
-                // In a POST request, we don't pass the values in the URL.
-                //Therefore we use only the web page URL as the parameter of the HttpPost argument
                 HttpPost httpPost = new HttpPost(Constants.PHP_NEW_OFFER);
 
-                // Because we are not passing values over the URL, we should have a mechanism to pass the values that can be
-                //uniquely separate by the other end.
-                //To achieve that we use BasicNameValuePair
-                //Things we need to pass with the POST request
                 BasicNameValuePair tutorIDBasicNameValuePair = new BasicNameValuePair(Constants.POST_ID_UID, paramTutorID);
                 BasicNameValuePair titleBasicNameValuePair = new BasicNameValuePair(Constants.POST_ID_OFFER_TITLE, paramTitle);
                 BasicNameValuePair descriptionBasicNameValuePAir = new BasicNameValuePair(Constants.POST_ID_OFFER_DESCRIPTION, paramDescription);
+                BasicNameValuePair priceBasicNameValuePAir = new BasicNameValuePair(Constants.POST_ID_PRICE, paramPrice);
 
-                // We add the content that we want to pass with the POST request to as name-value pairs
-                //Now we put those sending details to an ArrayList with type safe of NameValuePair
                 List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
                 nameValuePairList.add(tutorIDBasicNameValuePair);
                 nameValuePairList.add(titleBasicNameValuePair);
                 nameValuePairList.add(descriptionBasicNameValuePAir);
+                nameValuePairList.add(priceBasicNameValuePAir);
 
                 try {
-                    // UrlEncodedFormEntity is an entity composed of a list of url-encoded pairs.
-                    //This is typically useful while sending an HTTP POST request.
                     UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(nameValuePairList);
 
-                    // setEntity() hands the entity (here it is urlEncodedFormEntity) to the request.
                     httpPost.setEntity(urlEncodedFormEntity);
 
                     try {
-                        // HttpResponse is an interface just like HttpPost.
-                        //Therefore we can't initialize them
+
                         HttpResponse httpResponse = httpClient.execute(httpPost);
 
-                        // According to the JAVA API, InputStream constructor do nothing.
-                        //So we can't initialize InputStream although it is not an interface
                         InputStream inputStream = httpResponse.getEntity().getContent();
 
                         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -157,8 +149,11 @@ public class CreateOfferActivity extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
 
-                if (result.equals(Constants.ANS_RIGHT_USERNAME_PASSWORD)) {
+                if (result.equals(Constants.ANS_CREATE_OFFER)) {
+                    Toast.makeText(CreateOfferActivity.this, "Offer created successfullyy",
+                            Toast.LENGTH_LONG).show();
                     startActivity(new Intent(CreateOfferActivity.this, TutorHomeScreenActivity.class));
+
                 } else {
                     System.out.println("Invalid POST req...");
                 }
