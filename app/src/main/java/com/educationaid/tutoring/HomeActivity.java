@@ -32,7 +32,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
-    public static User currentUser;
+    public static User currentUser = null;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
