@@ -51,7 +51,7 @@ public class OfferDetailActivity extends AppCompatActivity implements View.OnCli
     private void fillTextViews(JSONArray obj) throws JSONException {
         ((TextView)findViewById(R.id.txtTitleDetail)).setText(obj.getJSONObject(0).getString("title"));
         ((TextView)findViewById(R.id.txtDescriptionDetail)).setText(obj.getJSONObject(0).getString("description"));
-        ((TextView)findViewById(R.id.textViewPriceDetail)).setText(obj.getJSONObject(0).getString("description") + " / Hour");
+        ((TextView)findViewById(R.id.textViewPriceDetail)).setText(obj.getJSONObject(0).getString("price") + " / Hour");
         email = obj.getJSONObject(0).getString("email");
         price = obj.getJSONObject(0).getString("price");
         title = obj.getJSONObject(0).getString("title");
