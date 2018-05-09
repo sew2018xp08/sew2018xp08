@@ -8,9 +8,11 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
 
@@ -30,26 +32,12 @@ public class TutorHomeScreenInstrumentTest {
 
         assertEquals("com.educationaid.tutoring", appContext.getPackageName());
     }
-
-    @Test
-    public void useLogoutButton() throws  Exception {
-        onView(withText("Logout")).perform(click());
-    }
-    @Test
-    public void isWelcomeTextIsPresent() throws  Exception {
-        onView(withText("Hallo Max Mustermann!")).check(matches(isDisplayed()));
-    }
-
     @Test
     public void useAddButton() throws  Exception {
-        onView(withText("+")).perform(click());
+        onView(withId(R.id.buttonAdd)).perform(click());
     }
     @Test
     public void isOffersArePresent() throws  Exception {
         onView(withText("Your offers")).check(matches(isDisplayed()));
-    }
-    @Test
-    public void isOffersArePresent2() throws  Exception {
-        onView(withText("English")).check(matches(isDisplayed()));
     }
 }

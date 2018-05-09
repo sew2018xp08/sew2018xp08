@@ -6,13 +6,19 @@
     $title = $_POST['title'];
     $desc = $_POST['description'];
 
+    $u_id = 1;
+    $title = "mimi";
+    $desc = "mimidescription";
+
+
+
+
 
     //title + user exists already?
     $sql = 'SELECT * FROM offers WHERE u_id = ? and title = ?';
 
     /* prepare statement */
-    if ($stmt = $conn->prepare($sql))
-    {
+    if ($stmt = $conn->prepare($sql)) {
         $stmt->bind_param("is", $u_id, $title);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -27,7 +33,7 @@
             {
                 //Insert
                 $sql2 = 'INSERT INTO offers (u_id, title, description)
-                      VALUES (?, ?, ?)';
+                  VALUES (?, ?, ?)';
 
                 /* prepare statement */
                 if ($stmt2 = $conn->prepare($sql2))

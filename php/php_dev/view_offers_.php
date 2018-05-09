@@ -2,19 +2,21 @@
 
     include "/users/sew2018xp08/www/PHP/config.php";
 
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $u_id = $_POST['tutorID'];
 
-    $sql = 'SELECT u_id, first_name, last_name, email, admin FROM user WHERE email = ? and password = ?';
+    $u_id = 0;
 
+
+    $sql = 'SELECT * FROM offers WHERE u_id = ?';
     $user_data = array();
+
 
     /* prepare statement */
     if ($stmt = $conn->prepare($sql))
     {
-        $stmt->bind_param("ss", $email, $password);
-        $stmt->execute();   
-        $result = $stmt->get_result(); 
+        $stmt->bind_param("i", $u_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result)
         {
@@ -28,13 +30,11 @@
             }
             else
             {
-               echo "WRONG INPUT";
+                echo "NO OFFERS HERE";
             }
         }
 
         $stmt->close();
     }
-    /* close connection */
     $conn->close();
-
 ?>
