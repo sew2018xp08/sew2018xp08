@@ -27,7 +27,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
+public class RegistryActivity extends AppCompatActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 doRegister(((TextView)findViewById(R.id.txtNameRegistry)).getText().toString(), ((TextView)findViewById(R.id.txtSurnameRegistry)).getText().toString(),
                         ((TextView)findViewById(R.id.txtEmailRegistry)).getText().toString(), ((TextView)findViewById(R.id.txtPasswordRegistry)).getText().toString());
                 } else
-                Toast.makeText(RegisterActivity.this, "Check input",
+                Toast.makeText(RegistryActivity.this, "Check input",
                         Toast.LENGTH_LONG).show();
             }
         }
@@ -174,7 +174,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 super.onPostExecute(result);
 
                 if(result.equals(Constants.ANS_CREATED_USER_SUCCESFULLY)){
-                    startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                    startActivity(new Intent(RegistryActivity.this, HomeActivity.class));
                     Toast.makeText(getApplicationContext(), R.string.successful_registry, Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(getApplicationContext(), R.string.user_alredy_exists, Toast.LENGTH_LONG).show();
