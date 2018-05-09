@@ -1,5 +1,7 @@
+#PHPStorm
+php/.idea/*
 # Built application files
-/*/build/
+build/*
 
 # Crashlytics configuations
 com_crashlytics_export_strings.xml
@@ -9,12 +11,18 @@ local.properties
 
 # Gradle generated files
 .gradle/
+app/gradle/
+app/gradlew
+app/gradlew.bat
+
 
 # Signing files
 .signing/
 
 # User-specific configurations
+app/.idea/
 .idea/libraries/
+.idea/codeStyles/
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/.name
@@ -25,6 +33,8 @@ local.properties
 .idea/modules.xml
 .idea/scopes/scope_settings.xml
 .idea/vcs.xml
+.idea/runConfigurations.xml
+.idea/caches/
 *.iml
 
 # OS-specific files

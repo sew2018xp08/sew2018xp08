@@ -12,6 +12,7 @@ public class Constants {
     public static String PHP_NEW_OFFER = "http://sew2018xp08.bplaced.net/PHP/new_offer.php";
     public static String PHP_VIEW_OFFER = "http://sew2018xp08.bplaced.net/PHP/view_offers.php";
     public static String PHP_DELETE_OFFER = "http://sew2018xp08.bplaced.net/PHP/delete_offers.php";
+    public static String PHP_VIEW_ALL_OFFERS = "http://sew2018xp08.bplaced.net/PHP/view_all_offers.php";
 
 
     //POST IDs

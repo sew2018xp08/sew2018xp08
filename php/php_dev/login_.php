@@ -5,13 +5,13 @@
     $email = $_POST['email'];
     $password = $_POST['password'];
 
+    $email = "tamara.steinwender@gmx.at";
+    $password = "1234567";
+
     $sql = 'SELECT u_id, first_name, last_name, email, admin FROM user WHERE email = ? and password = ?';
 
-    $user_data = array();
-
     /* prepare statement */
-    if ($stmt = $conn->prepare($sql))
-    {
+    if ($stmt = $conn->prepare($sql)) {
         $stmt->bind_param("ss", $email, $password);
         $stmt->execute();   
         $result = $stmt->get_result(); 
