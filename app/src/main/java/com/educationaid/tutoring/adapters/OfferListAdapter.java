@@ -1,6 +1,8 @@
 package com.educationaid.tutoring.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
@@ -11,8 +13,16 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.educationaid.tutoring.Constants.Constants;
+import com.educationaid.tutoring.HomeActivity;
+import com.educationaid.tutoring.LoginActivity;
+import com.educationaid.tutoring.Model.User;
 import com.educationaid.tutoring.R;
+import com.educationaid.tutoring.TutorHomeScreenActivity;
 import com.educationaid.tutoring.WebService.WebService;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.List;
 
@@ -82,14 +92,35 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.yes, (dialog, whichButton)
                         -> {
-                    if (new WebService().DeleteOffer(id).equals("true")) {
+                    deleteOffer(id, position, v, this);
+
+                })
+                .setNegativeButton(android.R.string.no, null).show();
+    }
+
+
+    public void deleteOffer(String id, int position, View v, OfferListAdapter adapter) {
+
+        new AsyncTask<String, Void, String>() {
+
+            @Override
+            protected String doInBackground(String... params) {
+                return new WebService().DeleteOffer(params[0]);
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                if (result.toString().equals(Constants.ANS_DELETE_OFFER)) {
                         itemList.remove(position);
                         Toast.makeText(v.getContext(), "Item deleted.", Toast.LENGTH_LONG).show();
-                        this.notifyDataSetChanged();
+                        adapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(v.getContext(), "Error: Item not deleted!", Toast.LENGTH_LONG).show();
                     }
-                })
-                .setNegativeButton(android.R.string.no, null).show();
+
+            }
+        }.execute(id);
     }
 }

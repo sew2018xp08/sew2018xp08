@@ -34,6 +34,7 @@ public class Constants {
     public static String ANS_RIGHT_USERNAME_PASSWORD = "WRONG INPUT";
     public static String ANS_DELETE_USER = "test@test.com is deleted";
     public static String ANS_CREATE_OFFER = "New offer created successfully";
+    public static String ANS_DELETE_OFFER = "false";
 
     public static int NOT_LOGGED_IN = 0;
 }
