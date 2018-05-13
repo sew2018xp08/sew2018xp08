@@ -2,28 +2,22 @@ package com.educationaid.tutoring;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.media.Image;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.educationaid.tutoring.Constants.Constants;
 import com.educationaid.tutoring.Model.User;
 import com.educationaid.tutoring.adapters.OfferListAdapter;
-
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -41,7 +35,6 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -64,7 +57,7 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
         ArrayList<Pair<String, String>> offers = buildList();
 
         @SuppressLint("ResourceType")
-        OfferListAdapter oladapter = new OfferListAdapter(this.findViewById(R.layout.activity_tutor_home_screen), offers);
+        OfferListAdapter oladapter = new OfferListAdapter(this, offers);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -85,7 +78,7 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
         try {
             JSONArray jsonArrayOffers = new JSONArray(offersString);
             for (int i = 0; i < jsonArrayOffers.length(); i++) {
-                String id = jsonArrayOffers.getJSONObject(i).getString("id");
+                String id = jsonArrayOffers.getJSONObject(i).getString("o_id");
                 String title = jsonArrayOffers.getJSONObject(i).getString("title");
                 offers.add(new Pair<>(id, title));
             }

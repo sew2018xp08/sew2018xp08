@@ -1,6 +1,6 @@
 package com.educationaid.tutoring.adapters;
 
-import android.content.DialogInterface;
+import android.app.Activity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
@@ -12,17 +12,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.educationaid.tutoring.R;
-import com.educationaid.tutoring.TutorHomeScreenActivity;
 import com.educationaid.tutoring.WebService.WebService;
 
 import java.util.List;
-import java.util.Map;
 
 public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyViewHolder>{
 
     private List<Pair<String, String>> itemList;
     private RecyclerViewClickListener mListener;
-    private View activityView;
+    private Activity activityView;
 
     public interface RecyclerViewClickListener {
         void onClick(View view, int position);
@@ -46,7 +44,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
     }
 
 
-    public OfferListAdapter(View view, List<Pair<String, String>> itemList) {
+    public OfferListAdapter(Activity view, List<Pair<String, String>> itemList) {
         this.itemList = itemList;
         this.activityView = view;
     }
@@ -66,7 +64,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
         holder.imgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showConfirmationDialog(activityView, item.first, position);
+                showConfirmationDialog(activityView.findViewById(R.id.tutor_home_screen), item.first, position);
             }
         });
         holder.text.setOnClickListener(v -> Toast.makeText(v.getContext(), "Position " + position, Toast.LENGTH_SHORT).show());

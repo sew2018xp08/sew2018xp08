@@ -1,19 +1,13 @@
 package com.educationaid.tutoring;
 
 import android.content.Context;
-import android.support.design.widget.TextInputLayout;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
-import android.view.View;
 
 import com.educationaid.tutoring.Model.User;
 import com.educationaid.tutoring.WebService.WebService;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
 import org.json.JSONArray;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,11 +15,7 @@ import org.junit.Test;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -57,7 +47,7 @@ public class CreateOfferInstrumentTest {
 
         assertEquals("com.educationaid.tutoring", appContext.getPackageName());
     }
-    
+
     @Test
     public void clickAddButton() throws  Exception {
         onView(withId(R.id.btnMenuAdd)).perform(click());
