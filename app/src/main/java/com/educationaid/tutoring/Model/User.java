@@ -7,6 +7,7 @@ public class User {
     int admin_;
     String first_name_;
     String last_name_;
+    boolean pro_user_;
     String email_;
 
 
@@ -14,10 +15,11 @@ public class User {
         id_ = Constants.NOT_LOGGED_IN;
     }
 
-    public User(int id, String first_name, String last_name, String email, int admin) {
+    public User(int id, String first_name, String last_name, boolean pro_user, String email, int admin) {
         id_ = id;
         first_name_ = first_name;
         last_name_ = last_name;
+        pro_user_ = pro_user;
         email_ = email;
         admin_ = admin;
     }
@@ -32,6 +34,10 @@ public class User {
 
     public String getFirstName() {
         return first_name_;
+    }
+
+    public boolean isProUser() {
+        return pro_user_;
     }
 
     public String getEmail() {
