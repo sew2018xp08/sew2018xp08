@@ -14,7 +14,7 @@
         android:layout_marginStart="54dp"
         android:layout_marginTop="84dp"
         android:ems="10"
-        android:hint="max.mustermann@gmail.com"
+        android:hint="@string/email_hint"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
         android:layout_marginStart="54dp"
         android:layout_marginTop="42dp"
         android:ems="10"
-        android:hint="****"
+        android:hint="@string/password_hint"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
         android:layout_marginEnd="54dp"
         android:layout_marginStart="54dp"
         android:layout_marginTop="43dp"
-        android:text="Login"
+        android:text="@string/login"
         app:layout_constraintBottom_toBottomOf="@+id/txtRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +52,7 @@
         android:id="@+id/txtViewEMail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="E-Mail"
+        android:text="@string/email"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txtUserName"
         app:layout_constraintStart_toStartOf="@+id/txtUserName" />
@@ -61,7 +61,7 @@
         android:id="@+id/txtViewPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Passwort"
+        android:text="@string/password"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txtPassword"
         app:layout_constraintStart_toStartOf="@+id/txtPassword" />
@@ -71,20 +71,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:text="E-Mail and or Password are incorrect !"
+        android:text="@string/login_warning"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/txtPassword"
         app:layout_constraintTop_toBottomOf="@+id/txtPassword"
-        tools:text="E-Mail and or Password are incorrect !" />
+        tools:text="@string/login_warning" />
 
     <TextView
         android:id="@+id/txtRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Not a tutor yet?"
+        android:text="@string/not_a_tutor"
         app:layout_constraintBaseline_toBaselineOf="@+id/btnRegister"
         app:layout_constraintStart_toStartOf="@+id/btnLogin"
-        tools:text="Not a tutor yet?" />
+        tools:text="@string/not_a_tutor" />
 
     <Button
         android:id="@+id/btnRegister"
@@ -93,7 +93,7 @@
         android:layout_marginEnd="54dp"
         android:layout_marginRight="54dp"
         android:layout_marginTop="82dp"
-        android:text="Register"
+        android:text="@string/register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtWarning" />
 
