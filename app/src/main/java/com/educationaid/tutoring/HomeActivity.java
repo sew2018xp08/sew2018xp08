@@ -154,15 +154,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                                         (TableLayout.LayoutParams.FILL_PARENT,TableLayout.LayoutParams.FILL_PARENT);
                         tableRowParams.setMargins(0,10,0,10);
                         table.setLayoutParams(tableRowParams);
-                        table.setBackgroundColor(Color.LTGRAY);
+                        table.setBackgroundColor(Color.TRANSPARENT);
 
                         LinearLayout linearLayout = new LinearLayout(HomeActivity.this);
                         setContentView(linearLayout);
                         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
                         TextView txtOffers = new TextView(HomeActivity.this);
-                        txtOffers.setTextSize(30);
+                        txtOffers.setTextSize(40);
                         txtOffers.setText("Offers");
+                        txtOffers.setPadding(50,0,0,0);
                         linearLayout.addView(txtOffers);
 
 
@@ -171,16 +172,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                             TableRow row = new TableRow(HomeActivity.this);
                             row.setClickable(true);
                             row.setId(Integer.parseInt(obj.getJSONObject(i).getString("o_id")));
-                            row.setBackgroundColor(((i%2) == 0) ? Color.DKGRAY : Color.GRAY);
+                            row.setBackgroundColor(((i%2) == 0) ? 366491 : Color.WHITE);
                             row.setLayoutParams(tableRowParams);
                             for(int j = 0; j < 3; j++) {
                                 TextView tv = new TextView(HomeActivity.this);
-                                tv.setTextSize(15);
+                                tv.setTextSize(17);
                                 if(j == 1) {
-                                    tv.setText("         |         ");
+                                    tv.setText("      |      ");
                                     row.addView(tv);
                                     continue;
                                 }
+                                tv.setPadding(50,0,0,0);
                                 tv.setText(j == 0 ? obj.getJSONObject(i).getString("title") : obj.getJSONObject(i).getString("first_name") + " " + obj.getJSONObject(i).getString("last_name"));
                                 row.addView(tv);
                                 offers_in_table_.add(row);
