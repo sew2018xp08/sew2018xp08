@@ -1,7 +1,6 @@
 package com.educationaid.tutoring.adapters;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -14,15 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.educationaid.tutoring.Constants.Constants;
-import com.educationaid.tutoring.HomeActivity;
-import com.educationaid.tutoring.LoginActivity;
-import com.educationaid.tutoring.Model.User;
 import com.educationaid.tutoring.R;
-import com.educationaid.tutoring.TutorHomeScreenActivity;
 import com.educationaid.tutoring.WebService.WebService;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.List;
 
@@ -82,7 +74,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return itemList == null ? 0 : itemList.size();
     }
 
     private void showConfirmationDialog(View v, String id, int position) {
