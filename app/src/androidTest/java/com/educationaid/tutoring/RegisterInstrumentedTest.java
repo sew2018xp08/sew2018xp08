@@ -21,7 +21,9 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
@@ -67,12 +69,15 @@ public class RegisterInstrumentedTest {
     @Test
     public void testRegisterExistingUser() {
         Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
+        onView(withId(R.id.rbFreeTutor)).perform(click());
         onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("Max"));
         onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("Mustermann"));
         onView(withId(R.id.txtEmailRegistry)).perform(scrollTo(), typeText("test@test.com"));
         onView(withId(R.id.txtPasswordRegistry)).perform(scrollTo(), typeText("123"));
         onView(withId(R.id.txtPasswordconfRegistry)).perform(scrollTo(), typeText("123"));
 
+        onView(withId(R.id.rbFreeTutor)).check(matches(isChecked()));
+        onView(withId(R.id.rbProTutor)).check(matches(isNotChecked()));
         onView(withId(R.id.txtNameRegistry)).check(matches(withText("Max")));
         onView(withId(R.id.txtSurnameRegistry)).check(matches(withText("Mustermann")));
         onView(withId(R.id.txtEmailRegistry)).check(matches(withText("test@test.com")));
@@ -87,12 +92,15 @@ public class RegisterInstrumentedTest {
         onView(withText("Login")).perform(click());
         onView(withId(R.id.btnRegister)).perform(click());
 
+        onView(withId(R.id.rbFreeTutor)).perform(click());
         onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("Max"));
         onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("Mustermann"));
         onView(withId(R.id.txtEmailRegistry)).perform(scrollTo(), typeText("test@test.com"));
         onView(withId(R.id.txtPasswordRegistry)).perform(scrollTo(), typeText("123"));
         onView(withId(R.id.txtPasswordconfRegistry)).perform(scrollTo(), typeText("123"));
 
+        onView(withId(R.id.rbFreeTutor)).check(matches(isChecked()));
+        onView(withId(R.id.rbProTutor)).check(matches(isNotChecked()));
         onView(withId(R.id.txtNameRegistry)).check(matches(withText("Max")));
         onView(withId(R.id.txtSurnameRegistry)).check(matches(withText("Mustermann")));
         onView(withId(R.id.txtEmailRegistry)).check(matches(withText("test@test.com")));
