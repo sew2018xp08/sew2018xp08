@@ -24,7 +24,7 @@ public class RegistryActivity extends AppCompatActivity implements View.OnClickL
         btnLicenceInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(RegisterActivity.this, LicenceInfoActivity.class));
+                startActivity(new Intent(RegistryActivity.this, LicenceInfoActivity.class));
             }
         });
     }
