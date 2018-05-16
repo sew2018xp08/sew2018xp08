@@ -32,7 +32,7 @@ public class PHPWebserviceUnitTest extends Mockito {
     @Test
     public void phpRegisterTest() throws Exception {
         Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
-        String result = webService.Register("Max", "Mustermann", "test@test.com", "123");
+        String result = webService.Register("Max", "Mustermann", "test@test.com", "123", "0");
         Assert.assertTrue(result.equals(Constants.ANS_CREATED_USER_SUCCESFULLY));
         Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
     }

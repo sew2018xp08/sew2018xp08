@@ -54,13 +54,14 @@ public class WebService {
         return ExecuteResultToString(httpPost);
     }
 
-    public String Register(String paramFirstname, String paramLastname, String paramEmail, String paramPassword) {
+    public String Register(String paramFirstname, String paramLastname, String paramEmail, String paramPassword, String paramIsPro) {
         HttpPost httpPost = new HttpPost(Constants.PHP_REGISTER_LINK);
         SetEntity(httpPost, Arrays.asList(
                 new BasicNameValuePair(Constants.POST_ID_EMAIL, paramEmail),
                 new BasicNameValuePair(Constants.POST_ID_PASSWORD, paramPassword),
                 new BasicNameValuePair(Constants.POST_ID_FIRSTNAME, paramFirstname),
-                new BasicNameValuePair(Constants.POST_ID_LASTNAME, paramLastname)
+                new BasicNameValuePair(Constants.POST_ID_LASTNAME, paramLastname),
+                new BasicNameValuePair(Constants.POST_ID_PRO, paramIsPro)
         ));
         return ExecuteResultToString(httpPost);
     }

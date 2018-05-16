@@ -27,6 +27,7 @@ public class Constants {
     public static String POST_ID_OFFER_DESCRIPTION = "description";
     public static String POST_ID_OFFERID = "offerID";
     public static String POST_ID_PRICE = "price";
+    public static String POST_ID_PRO = "pro";
 
 
     //SERVER ANSWER - EQUALS

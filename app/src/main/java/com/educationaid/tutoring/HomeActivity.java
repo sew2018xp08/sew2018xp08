@@ -3,16 +3,18 @@ package com.educationaid.tutoring;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.educationaid.tutoring.Constants.Constants;
 import com.educationaid.tutoring.Model.User;
@@ -32,7 +34,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
-    public static User currentUser = null;
+    public static User currentUser = new User();
     private static ArrayList<TableRow> offers_in_table_;
 
     @Override
@@ -42,7 +44,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                 return true;
             case R.id.btnMenuLogout:
-                currentUser = null;
+                currentUser = new User();
                 Intent refresh = new Intent(this, HomeActivity.class);
                 startActivity(refresh);
                 this.finish();
@@ -58,7 +60,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(currentUser == null ? R.menu.menu_home_view_unlogged : R.menu.menu_home_view_loggedin, menu);
+        inflater.inflate(currentUser.getAdmin() == Constants.NOT_LOGGED_IN ? R.menu.menu_home_view_unlogged : R.menu.menu_home_view_loggedin, menu);
         return true;
     }
 
@@ -66,12 +68,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        System.out.println(currentUser.getUserId());
         offers_in_table_ = new ArrayList<>();
         getOffers();
     }
 
     private void setRowListener() {
-        for (TableRow row : offers_in_table_) {
+        for(TableRow row : offers_in_table_) {
             row.setOnClickListener(this);
         }
     }
@@ -83,8 +86,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                 break;
             default:
-                for (TableRow row : offers_in_table_) {
-                    if (v.getId() == row.getId()) {
+                for(TableRow row : offers_in_table_) {
+                    if(v.getId() == row.getId()) {
                         System.out.println(row.getId());
                         Intent intent = new Intent(HomeActivity.this, OfferDetailActivity.class);
                         Bundle bundle = new Bundle();
@@ -166,6 +169,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                         for(int i = 0; i < obj.length(); i++)
                         {
                             TableRow row = new TableRow(HomeActivity.this);
+                            row.setClickable(true);
+                            row.setId(Integer.parseInt(obj.getJSONObject(i).getString("o_id")));
                             row.setBackgroundColor(((i%2) == 0) ? Color.DKGRAY : Color.GRAY);
                             row.setLayoutParams(tableRowParams);
                             for(int j = 0; j < 3; j++) {
@@ -184,10 +189,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                         }
                         linearLayout.addView(table);
                         setRowListener();
-
-                        /*HomeActivity.currentUser = new User(Integer.valueOf(obj.getJSONObject(0).getString("u_id")), obj.getJSONObject(0).getString("first_name"),
-                                obj.getJSONObject(0).getString("last_name"), obj.getJSONObject(0).getString("email"),
-                                Integer.valueOf(obj.getJSONObject(0).getString("admin")));*/
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

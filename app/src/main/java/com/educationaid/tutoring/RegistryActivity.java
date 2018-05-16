@@ -5,6 +5,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,14 +20,26 @@ public class RegistryActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registry);
         (findViewById(R.id.btnRegistry)).setOnClickListener(this);
+        ImageView btnLicenceInfo = (ImageView) findViewById(R.id.btnLicenceInfo);
+        btnLicenceInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RegisterActivity.this, LicenceInfoActivity.class));
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.btnRegistry){
             if(registryValidation()) {
+                RadioGroup radioGroup = findViewById(R.id.rgProUser);
+                int selectedId = radioGroup.getCheckedRadioButtonId();
+                String radioButton = ((RadioButton) findViewById(selectedId)).getText().toString();
+                String isPro = radioButton.equals("Free") ? "0" : "1";
+
                 doRegister(((TextView)findViewById(R.id.txtNameRegistry)).getText().toString(), ((TextView)findViewById(R.id.txtSurnameRegistry)).getText().toString(),
-                        ((TextView)findViewById(R.id.txtEmailRegistry)).getText().toString(), ((TextView)findViewById(R.id.txtPasswordRegistry)).getText().toString());
+                        ((TextView) findViewById(R.id.txtEmailRegistry)).getText().toString(), ((TextView) findViewById(R.id.txtPasswordRegistry)).getText().toString(), isPro);
                 } else
                 Toast.makeText(RegistryActivity.this, "Check input",
                         Toast.LENGTH_LONG).show();
@@ -97,12 +112,12 @@ public class RegistryActivity extends AppCompatActivity implements View.OnClickL
         return true;
     }
 
-    public void doRegister(String givenFirstname, String givenLastname, String givenEmail, String givenPassword) {
+    public void doRegister(String givenFirstname, String givenLastname, String givenEmail, String givenPassword, String givenIsPro) {
         new AsyncTask<String, Void, String>() {
 
             @Override
             protected String doInBackground(String... params) {
-                return new WebService().Register(params[0], params[1], params[2], params[3]);
+                return new WebService().Register(params[0], params[1], params[2], params[3], params[4]);
             }
             @Override
             protected void onPostExecute(String result) {
@@ -115,6 +130,6 @@ public class RegistryActivity extends AppCompatActivity implements View.OnClickL
                     Toast.makeText(getApplicationContext(), R.string.user_alredy_exists, Toast.LENGTH_LONG).show();
                 }
             }
-        }.execute(givenFirstname, givenLastname, givenEmail, givenPassword);
+        }.execute(givenFirstname, givenLastname, givenEmail, givenPassword, givenIsPro);
     }
 }

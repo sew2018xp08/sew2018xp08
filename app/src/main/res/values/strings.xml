@@ -2,4 +2,6 @@
     <string name="app_name">Tutoring</string>
     <string name="successful_registry">Benutzer wurde erfolgreich erstellt!</string>
     <string name="user_alredy_exists">Benutzer existiert bereits!</string>
+    <string name="free_licence">> Create offers with title and descrition\n> Delete offers\n</string>
+    <string name="pro_licence">All functionalities of free account and\n> Students see offers of your first (coming soon)\n> Upload profile picture (coming soon)\n</string>
 </resources>
