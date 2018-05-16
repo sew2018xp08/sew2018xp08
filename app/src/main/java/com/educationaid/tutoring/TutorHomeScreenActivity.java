@@ -50,6 +50,9 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tutor_home_screen);
         setTitle("Home");
 
+
+
+
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
         ((TextView)findViewById(R.id.welcomeText)).setText("Hello " + HomeActivity.currentUser.getFirstName() + " " + HomeActivity.currentUser.getLastName() + ".");
