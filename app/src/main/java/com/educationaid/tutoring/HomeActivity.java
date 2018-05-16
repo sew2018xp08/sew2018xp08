@@ -3,18 +3,16 @@ package com.educationaid.tutoring;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Space;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.educationaid.tutoring.Constants.Constants;
 import com.educationaid.tutoring.Model.User;
@@ -191,7 +189,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                         setRowListener();
 
                         HomeActivity.currentUser = new User(Integer.valueOf(obj.getJSONObject(0).getString("u_id")), obj.getJSONObject(0).getString("first_name"),
-                                obj.getJSONObject(0).getString("last_name"), obj.getJSONObject(0).getString("email"),
+                                obj.getJSONObject(0).getString("last_name"), false, obj.getJSONObject(0).getString("email"),
                                 Integer.valueOf(obj.getJSONObject(0).getString("admin")));
                     } catch (JSONException e) {
                         e.printStackTrace();
