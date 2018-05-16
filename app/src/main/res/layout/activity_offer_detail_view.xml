@@ -99,7 +99,7 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
-                    android:text=" "
+                    android:text="@string/space"
                     android:textColor="@android:color/holo_orange_dark"
                     android:textSize="18sp" />
 
@@ -115,7 +115,7 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
-                    android:text=" "
+                    android:text="@string/space"
                     android:textColor="@android:color/black"
                     android:textSize="18sp" />
 
@@ -131,7 +131,7 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
-                    android:text=" "
+                    android:text="@string/space"
                     android:textColor="@android:color/black"
                     android:textSize="18sp" />
 
@@ -147,7 +147,7 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
-                    android:text=" "
+                    android:text="@string/space"
                     android:textColor="@android:color/black"
                     android:textSize="18sp" />
 
@@ -166,7 +166,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:shadowRadius="500"
-                    android:text="Tutor Kontaktieren"
+                    android:text="@string/tutor_contact"
                     android:textColor="@android:color/white" />
 
             </LinearLayout>

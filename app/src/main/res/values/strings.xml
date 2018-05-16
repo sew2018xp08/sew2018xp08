@@ -4,4 +4,30 @@
     <string name="user_alredy_exists">Benutzer existiert bereits!</string>
     <string name="free_licence">> Create offers with title and descrition\n> Delete offers\n</string>
     <string name="pro_licence">All functionalities of free account and\n> Students see offers of your first (coming soon)\n> Upload profile picture (coming soon)\n</string>
+    <!--LOGIN-->
+    <string name="email_hint">max.mustermann@gmail.com</string>
+    <string name="email">E-Mail</string>
+    <string name="password">Passwort</string>
+    <string name="password_hint">****</string>
+    <string name="login">Login</string>
+    <string name="not_a_tutor">Not a tutor yet?</string>
+    <string name="register">Registrieren</string>
+    <string name="login_warning">E-Mail and or Password are incorrect !</string>
+
+    <!--Register-->
+    <string name="vorname">Vorname</string>
+    <string name="max">Max</string>
+    <string name="mustermann">Mustermann</string>
+    <string name="nachname">Nachname</string>
+    <string name="registry_warning">Darf nicht leer sein!</string>
+    <string name="password_check">Passwort bestätigen</string>
+
+    <!--create offer-->
+    <string name="price">Price</string>
+    <string name="description">Description</string>
+    <string name="title">Title</string>
+    <string name="tutor_contact">Tutor Kontaktieren</string>
+    <string name="space"> </string>
+
+    <string name="your_offers">Your offers</string>
 </resources>
