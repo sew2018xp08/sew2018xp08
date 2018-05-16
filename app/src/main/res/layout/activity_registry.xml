@@ -38,13 +38,13 @@
                 android:layout_marginRight="54dp"
 
                 android:layout_marginStart="54dp"
-                android:layout_marginTop="84dp"
+                android:layout_marginTop="24dp"
                 android:ems="10"
                 android:hint="Max"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/rgProUser" />
 
             <TextView
                 android:id="@+id/lblErrorNameRegistry"
@@ -106,13 +106,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="54dp"
                 android:layout_marginStart="54dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="48dp"
                 android:ems="10"
                 android:hint="max.mustermann@gmail.com"
                 android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/proUserSwitch" />
+                app:layout_constraintTop_toBottomOf="@+id/txtSurnameRegistry" />
 
             <TextView
                 android:id="@+id/lblErrorEmailRegistry"
@@ -210,19 +210,61 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtPasswordconfRegistry" />
 
-            <Switch
-                android:id="@+id/proUserSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="98dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Licence Type"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/btnLicenceInfo"
+                app:layout_constraintStart_toStartOf="@+id/rgProUser"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioGroup
+                android:id="@+id/rgProUser"
+                android:layout_width="267dp"
+                android:layout_height="48dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Pro user: "
+                android:paddingLeft="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.505"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lblErrorSurnameRegistry" />
+                app:layout_constraintTop_toBottomOf="@+id/textView">
+
+                <RadioButton
+                    android:id="@+id/rbFreeTutor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="Free"
+                    android:textColorLink="@android:color/black" />
+
+                <RadioButton
+                    android:id="@+id/rbProTutor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Pro" />
+            </RadioGroup>
+
+            <ImageView
+                android:id="@+id/btnLicenceInfo"
+                android:layout_width="16dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="176dp"
+                android:layout_marginRight="176dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_info_outline_black_16dp" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
