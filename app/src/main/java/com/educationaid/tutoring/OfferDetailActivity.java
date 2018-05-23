@@ -1,17 +1,15 @@
 package com.educationaid.tutoring;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.educationaid.tutoring.Constants.Constants;
-import com.educationaid.tutoring.Model.User;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -44,10 +42,21 @@ public class OfferDetailActivity extends AppCompatActivity implements View.OnCli
 
         Bundle bundle = new Bundle();
         bundle = getIntent().getExtras();
+        int parentId = bundle.getInt("view");
+
         ((Button)findViewById(R.id.ButtonContactDetail)).setOnClickListener(this);
         getOffer(String.valueOf(bundle.getInt("offerid")));
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void fillTextViews(JSONArray obj) throws JSONException {
         ((TextView)findViewById(R.id.txtTitleDetail)).setText(obj.getJSONObject(0).getString("title"));
         ((TextView)findViewById(R.id.txtDescriptionDetail)).setText(obj.getJSONObject(0).getString("description"));

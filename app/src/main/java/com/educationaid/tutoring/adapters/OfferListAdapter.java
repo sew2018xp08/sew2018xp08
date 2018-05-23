@@ -1,7 +1,9 @@
 package com.educationaid.tutoring.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.educationaid.tutoring.Constants.Constants;
+import com.educationaid.tutoring.OfferDetailActivity;
 import com.educationaid.tutoring.R;
 import com.educationaid.tutoring.WebService.WebService;
 
@@ -69,7 +72,16 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
                 showConfirmationDialog(activityView.findViewById(R.id.tutor_home_screen), item.first, position);
             }
         });
-        holder.text.setOnClickListener(v -> Toast.makeText(v.getContext(), "Position " + position, Toast.LENGTH_SHORT).show());
+        holder.text.setOnClickListener(v -> displayOffer(activityView.findViewById(R.id.tutor_home_screen), item.first));
+    }
+
+    private void displayOffer(View v, String offerId) {
+        Intent intent = new Intent(v.getContext(), OfferDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("offerid", Integer.parseInt(offerId));
+        bundle.putInt("view", v.getId());
+        intent.putExtras(bundle);
+        v.getContext().startActivity(intent);
     }
 
     @Override

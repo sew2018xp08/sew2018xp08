@@ -13,7 +13,6 @@ import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.educationaid.tutoring.Constants.Constants;
 import com.educationaid.tutoring.Model.User;
@@ -47,16 +46,9 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tutor_home_screen);
         setTitle("Home");
 
-
-
-
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
-
         ((TextView)findViewById(R.id.welcomeText)).setText("Hello " + HomeActivity.currentUser.getFirstName() + " " + HomeActivity.currentUser.getLastName() + ".");
 
-        OfferListAdapter.RecyclerViewClickListener listener = (view, position) -> {
-            Toast.makeText(view.getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
-        };
         ArrayList<Pair<String, String>> offers = buildList();
 
         @SuppressLint("ResourceType")

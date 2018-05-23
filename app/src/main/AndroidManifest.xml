@@ -41,9 +41,7 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity android:name=".CreateOfferActivity" />
-        <activity
-            android:name=".OfferDetailActivity"
-            android:parentActivityName=".HomeActivity">
+        <activity android:name=".OfferDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
