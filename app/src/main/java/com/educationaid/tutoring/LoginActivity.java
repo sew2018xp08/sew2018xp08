@@ -71,14 +71,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         System.out.println("Hei sweetty <3");
                         String encodedImage = obj.getJSONObject(0).getString("picture");
 
-                        if(encodedImage != null) {
+                        if(!encodedImage.equals("null")) {
                             byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
                             decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         }
 
                         HomeActivity.currentUser = new User(Integer.valueOf(obj.getJSONObject(0).getString("u_id")), obj.getJSONObject(0).getString("first_name"),
                                 obj.getJSONObject(0).getString("last_name"), obj.getJSONObject(0).getString("pro").equals("0") ? false : true, obj.getJSONObject(0).getString("email"),
-                                Integer.valueOf(obj.getJSONObject(0).getString("admin")), decodedByte);
+                                Integer.valueOf(obj.getJSONObject(0).getString("admin")), null);
+                        if(HomeActivity.currentUser.isProUser()) {
+                            HomeActivity.currentUser.setProfilePicture(decodedByte);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

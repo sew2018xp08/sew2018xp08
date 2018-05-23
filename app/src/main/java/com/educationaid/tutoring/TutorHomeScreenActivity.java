@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -73,13 +74,13 @@ public class TutorHomeScreenActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_tutor_home_screen);
         setTitle("Home");
 
-        if (HomeActivity.currentUser.isProUser()) {
+
             ((ImageView) findViewById(R.id.tutorImage)).setClickable(true);
             ((ImageView) findViewById(R.id.tutorImage)).setOnClickListener(this);
 
             if(HomeActivity.currentUser.getProfilePicture() != null)
                 ((ImageView) findViewById(R.id.tutorImage)).setImageBitmap(HomeActivity.currentUser.getProfilePicture());
-        }
+
 
 
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -209,7 +210,21 @@ public class TutorHomeScreenActivity extends AppCompatActivity implements View.O
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tutorImage:
-                showPictureDialog();
+                if(HomeActivity.currentUser.isProUser())
+                    showPictureDialog();
+                else {
+                    new AlertDialog.Builder(TutorHomeScreenActivity.this)
+                            .setTitle("Error")
+                            .setMessage("Profile picture is only aviable for pro users.")
+                            .setCancelable(false)
+                            .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Whatever...
+                                }
+                            }).show();
+                }
+
                 break;
         }
     }
