@@ -220,7 +220,6 @@ public class TutorHomeScreenActivity extends AppCompatActivity implements View.O
                             .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    // Whatever...
                                 }
                             }).show();
                 }
