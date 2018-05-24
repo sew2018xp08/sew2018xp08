@@ -1,17 +1,36 @@
 package com.educationaid.tutoring;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
+import android.support.v7.widget.Toolbar;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,13 +51,22 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class TutorHomeScreenActivity extends AppCompatActivity {
+public class TutorHomeScreenActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +76,17 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
         setTitle("Home");
 
 
+            ((ImageView) findViewById(R.id.tutorImage)).setClickable(true);
+            ((ImageView) findViewById(R.id.tutorImage)).setOnClickListener(this);
+
+            if(HomeActivity.currentUser.getProfilePicture() != null)
+                ((ImageView) findViewById(R.id.tutorImage)).setImageBitmap(HomeActivity.currentUser.getProfilePicture());
+
 
 
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        ((TextView)findViewById(R.id.welcomeText)).setText("Hello " + HomeActivity.currentUser.getFirstName() + " " + HomeActivity.currentUser.getLastName() + ".");
+        ((TextView) findViewById(R.id.welcomeText)).setText("Hello " + HomeActivity.currentUser.getFirstName() + " " + HomeActivity.currentUser.getLastName() + ".");
 
         OfferListAdapter.RecyclerViewClickListener listener = (view, position) -> {
             Toast.makeText(view.getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
@@ -177,5 +211,167 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tutorImage:
+                if(HomeActivity.currentUser.isProUser())
+                    showPictureDialog();
+                else {
+                    new AlertDialog.Builder(TutorHomeScreenActivity.this)
+                            .setTitle("Error")
+                            .setMessage("Profile picture is only aviable for pro users.")
+                            .setCancelable(false)
+                            .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            }).show();
+                }
+
+                break;
+        }
+    }
+
+    private void showPictureDialog() {
+        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
+        pictureDialog.setTitle("Select Action");
+        String[] pictureDialogItems = {
+                "Select photo from gallery",
+                "Capture photo from camera"};
+        pictureDialog.setItems(pictureDialogItems,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                choosePhotoFromGallary();
+                                break;
+                            case 1:
+                                openImageChooser();
+                                break;
+                        }
+                    }
+                });
+        pictureDialog.show();
+    }
+
+    /* Choose an image from Gallery */
+    void openImageChooser() {
+        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(takePicture, Constants.CAMERA);
+    }
+
+    public void choosePhotoFromGallary() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        startActivityForResult(galleryIntent, Constants.GALLERY);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == Constants.CAMERA && resultCode == RESULT_OK && data != null) {
+            Bundle bundle = data.getExtras();
+            Bitmap map = (Bitmap)bundle.get("data");
+            pushPicture(map);
+            ((ImageView)findViewById(R.id.tutorImage)).setImageBitmap(map);
+        }
+
+        if(requestCode == Constants.GALLERY && resultCode == RESULT_OK && data != null) {
+            Uri imageUri = data.getData();
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            pushPicture(bitmap);
+            ((ImageView)findViewById(R.id.tutorImage)).setImageBitmap(bitmap);
+        }
+    }
+
+
+    public void pushPicture(Bitmap bitmap) {
+
+        class SendPostReqAsyncTask extends AsyncTask<Bitmap, Void, String> {
+
+            @Override
+            protected String doInBackground(Bitmap... params) {
+                Bitmap bitmap = params[0];
+                String uploadImage = getStringImage(bitmap);
+
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost(Constants.PHP_PUSH_PICTURE);
+
+                BasicNameValuePair pictureValuePair = new BasicNameValuePair(Constants.POST_PICTURE, uploadImage);
+                BasicNameValuePair userIdValuePair = new BasicNameValuePair(Constants.POST_ID_UID, String.valueOf(HomeActivity.currentUser.getUserId()));
+
+                List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
+                nameValuePairList.add(pictureValuePair);
+                nameValuePairList.add(userIdValuePair);
+
+                try {
+                    UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(nameValuePairList);
+
+                    httpPost.setEntity(urlEncodedFormEntity);
+
+                    try {
+
+                        HttpResponse httpResponse = httpClient.execute(httpPost);
+
+                        InputStream inputStream = httpResponse.getEntity().getContent();
+
+                        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+
+                        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                        StringBuilder stringBuilder = new StringBuilder();
+
+                        String bufferedStrChunk = null;
+
+                        while ((bufferedStrChunk = bufferedReader.readLine()) != null) {
+                            stringBuilder.append(bufferedStrChunk);
+                        }
+
+                        return stringBuilder.toString();
+
+                    } catch (ClientProtocolException cpe) {
+                        System.out.println("First Exception caz of HttpResponese :" + cpe);
+                        cpe.printStackTrace();
+                    } catch (IOException ioe) {
+                        System.out.println("Second Exception caz of HttpResponse :" + ioe);
+                        ioe.printStackTrace();
+                    }
+
+                } catch (UnsupportedEncodingException uee) {
+                    System.out.println("An Exception given because of UrlEncodedFormEntity argument :" + uee);
+                    uee.printStackTrace();
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+
+
+            }
+        }
+
+        SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
+        sendPostReqAsyncTask.execute(bitmap);
+    }
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
     }
 }
