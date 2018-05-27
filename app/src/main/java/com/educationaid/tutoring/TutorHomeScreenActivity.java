@@ -52,7 +52,7 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
         ArrayList<Pair<String, String>> offers = buildList();
 
         @SuppressLint("ResourceType")
-        OfferListAdapter oladapter = new OfferListAdapter(this, offers);
+        OfferListAdapter oladapter = new OfferListAdapter(this, offers, false);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -107,12 +107,10 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
             @Override
             protected String doInBackground(String... params) {
-                String resturn_statement;
+                String return_statement;
                 String paramTutorID = params[0];
 
                 HttpClient httpClient = new DefaultHttpClient();
-
-
                 HttpPost httpPost = new HttpPost(Constants.PHP_VIEW_OFFER);
 
                 BasicNameValuePair tutorIDBasicNameValuePair = new BasicNameValuePair(Constants.POST_ID_UID, paramTutorID);
@@ -135,8 +133,8 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
                         //Therefore we can't initialize them
                         HttpResponse httpResponse = httpClient.execute(httpPost);
                         HttpEntity entity = httpResponse.getEntity();
-                        resturn_statement = EntityUtils.toString(entity).toString();
-                        return resturn_statement;
+                        return_statement = EntityUtils.toString(entity);
+                        return return_statement;
 
                     } catch (ClientProtocolException cpe) {
                         System.out.println("First Exception caz of HttpResponese :" + cpe);

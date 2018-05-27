@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,21 +26,28 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
 
     private List<Pair<String, String>> itemList;
     private RecyclerViewClickListener mListener;
-    private Activity activityView;
+    private Activity activity;
+    private View activityView;
+    private boolean isHomeScreen;
+    private View offerTextView;
 
     public interface RecyclerViewClickListener {
         void onClick(View view, int position);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public TextView text;
+        public TextView offerTitle;
+        public TextView offerOwner;
         public ImageButton imgButton;
+        public LinearLayout textLayout;
 
         public MyViewHolder(View view) {
             super(view);
             view.setOnClickListener(this);
-            text = view.findViewById(R.id.offerTitle);
+            offerTitle = view.findViewById(R.id.offerTitle);
+            offerOwner = view.findViewById(R.id.offerOwner);
             imgButton = view.findViewById(R.id.button_delete);
+            textLayout = view.findViewById(R.id.textLayout);
         }
 
         @Override
@@ -48,31 +56,33 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
         }
     }
 
-
-    public OfferListAdapter(Activity view, List<Pair<String, String>> itemList) {
+    public OfferListAdapter(Activity activity, List<Pair<String, String>> itemList, boolean isHomeScreen) {
         this.itemList = itemList;
-        this.activityView = view;
+        this.activity = activity;
+        this.isHomeScreen = isHomeScreen;
+        this.activityView = this.isHomeScreen
+                ? activity.findViewById(R.id.home_screen)
+                : activity.findViewById(R.id.tutor_home_screen);
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
+        offerTextView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.textview_offer_item, parent, false);
-        return new MyViewHolder(itemView);
+        return new MyViewHolder(offerTextView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Pair<String, String> item = itemList.get(position);
-        holder.text.setText(item.second);
+        holder.offerTitle.setText(item.second);
+        holder.offerOwner.setText("Max Mustermann");
 
-        holder.imgButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showConfirmationDialog(activityView.findViewById(R.id.tutor_home_screen), item.first, position);
-            }
-        });
-        holder.text.setOnClickListener(v -> displayOffer(activityView.findViewById(R.id.tutor_home_screen), item.first));
+        if (isHomeScreen) offerTextView.findViewById(R.id.imgStar).setVisibility(View.VISIBLE);
+        else offerTextView.findViewById(R.id.button_delete).setVisibility(View.VISIBLE);
+
+        holder.imgButton.setOnClickListener(view -> showConfirmationDialog(activityView, item.first, position));
+        holder.textLayout.setOnClickListener(v -> displayOffer(activityView, item.first));
     }
 
     private void displayOffer(View v, String offerId) {

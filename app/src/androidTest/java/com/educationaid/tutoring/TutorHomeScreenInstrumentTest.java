@@ -8,13 +8,11 @@ import com.educationaid.tutoring.Model.User;
 import com.educationaid.tutoring.WebService.WebService;
 
 import org.json.JSONArray;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -40,6 +38,7 @@ public class TutorHomeScreenInstrumentTest {
                 Integer.valueOf(obj.getJSONObject(0).getString("u_id")),
                 obj.getJSONObject(0).getString("first_name"),
                 obj.getJSONObject(0).getString("last_name"),
+                false,
                 obj.getJSONObject(0).getString("email"),
                 Integer.valueOf(obj.getJSONObject(0).getString("admin")));
     }

@@ -37,6 +37,7 @@ public class CreateOfferInstrumentTest {
                 Integer.valueOf(obj.getJSONObject(0).getString("u_id")),
                 obj.getJSONObject(0).getString("first_name"),
                 obj.getJSONObject(0).getString("last_name"),
+                false,
                 obj.getJSONObject(0).getString("email"),
                 Integer.valueOf(obj.getJSONObject(0).getString("admin")));
     }

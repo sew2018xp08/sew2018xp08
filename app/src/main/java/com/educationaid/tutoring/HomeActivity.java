@@ -1,23 +1,23 @@
 package com.educationaid.tutoring;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.Space;
-import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.educationaid.tutoring.Constants.Constants;
 import com.educationaid.tutoring.Model.User;
+import com.educationaid.tutoring.adapters.OfferListAdapter;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -32,10 +32,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
     public static User currentUser = new User();
     private static ArrayList<TableRow> offers_in_table_;
+    private ArrayList<Pair<String, String>> offers = new ArrayList<>();
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -68,14 +71,32 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        System.out.println(currentUser.getUserId());
-        offers_in_table_ = new ArrayList<>();
-        getOffers();
+        ArrayList<Pair<String, String>> offers = buildList();
+
+        @SuppressLint("ResourceType")
+        OfferListAdapter oladapter = new OfferListAdapter(this, offers, true);
+
+        final RecyclerView recyclerView = findViewById(R.id.offerView);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(oladapter);
     }
 
-    private void setRowListener() {
-        for(TableRow row : offers_in_table_) {
-            row.setOnClickListener(this);
+    private ArrayList<Pair<String, String>> buildList() {
+        ArrayList<Pair<String, String>> offerList = new ArrayList<>();
+        String offerString = getOffers();
+        try {
+            JSONArray jsonArrayOffers = new JSONArray(offerString);
+            for (int i = 0; i < jsonArrayOffers.length(); i++) {
+                String id = jsonArrayOffers.getJSONObject(i).getString("o_id");
+                String title = jsonArrayOffers.getJSONObject(i).getString("title");
+                offerList.add(new Pair<>(id, title));
+            }
+            return offerList;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -100,41 +121,40 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void getOffers() {
+    public String getOffers() {
 
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
-
             @Override
             protected String doInBackground(String... params) {
 
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(Constants.PHP_VIEW_ALL_OFFERS);
-                    try {
-                        HttpResponse httpResponse = httpClient.execute(httpPost);
+                try {
+                    HttpResponse httpResponse = httpClient.execute(httpPost);
 
-                        InputStream inputStream = httpResponse.getEntity().getContent();
+                    InputStream inputStream = httpResponse.getEntity().getContent();
 
-                        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 
-                        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
-                        StringBuilder stringBuilder = new StringBuilder();
+                    StringBuilder stringBuilder = new StringBuilder();
 
-                        String bufferedStrChunk = null;
+                    String bufferedStrChunk;
 
-                        while ((bufferedStrChunk = bufferedReader.readLine()) != null) {
-                            stringBuilder.append(bufferedStrChunk);
-                        }
-
-                        return stringBuilder.toString();
-
-                    } catch (ClientProtocolException cpe) {
-                        System.out.println("First Exception caz of HttpResponese :" + cpe);
-                        cpe.printStackTrace();
-                    } catch (IOException ioe) {
-                        System.out.println("Second Exception caz of HttpResponse :" + ioe);
-                        ioe.printStackTrace();
+                    while ((bufferedStrChunk = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(bufferedStrChunk);
                     }
+
+                    return stringBuilder.toString();
+
+                } catch (ClientProtocolException cpe) {
+                    System.out.println("First Exception caz of HttpResponese :" + cpe);
+                    cpe.printStackTrace();
+                } catch (IOException ioe) {
+                    System.out.println("Second Exception caz of HttpResponse :" + ioe);
+                    ioe.printStackTrace();
+                }
 
                 return null;
             }
@@ -142,62 +162,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
-
-                    try {
-                        JSONArray obj = new JSONArray(result);
-                        System.out.println("Hei sweetty <3");
-
-                        TableLayout table = new TableLayout(HomeActivity.this);
-                        TableLayout.LayoutParams tableRowParams=
-                                new TableLayout.LayoutParams
-                                        (TableLayout.LayoutParams.FILL_PARENT,TableLayout.LayoutParams.FILL_PARENT);
-                        tableRowParams.setMargins(0,10,0,10);
-                        table.setLayoutParams(tableRowParams);
-                        table.setBackgroundColor(Color.TRANSPARENT);
-
-                        LinearLayout linearLayout = new LinearLayout(HomeActivity.this);
-                        setContentView(linearLayout);
-                        linearLayout.setOrientation(LinearLayout.VERTICAL);
-
-                        TextView txtOffers = new TextView(HomeActivity.this);
-                        txtOffers.setTextSize(40);
-                        txtOffers.setText("Offers");
-                        txtOffers.setPadding(50,0,0,0);
-                        linearLayout.addView(txtOffers);
-
-
-                        for(int i = 0; i < obj.length(); i++)
-                        {
-                            TableRow row = new TableRow(HomeActivity.this);
-                            row.setClickable(true);
-                            row.setId(Integer.parseInt(obj.getJSONObject(i).getString("o_id")));
-                            row.setBackgroundColor(((i%2) == 0) ? 366491 : Color.WHITE);
-                            row.setLayoutParams(tableRowParams);
-                            for(int j = 0; j < 3; j++) {
-                                TextView tv = new TextView(HomeActivity.this);
-                                tv.setTextSize(17);
-                                if(j == 1) {
-                                    tv.setText("      |      ");
-                                    row.addView(tv);
-                                    continue;
-                                }
-                                tv.setPadding(50,0,0,0);
-                                tv.setText(j == 0 ? obj.getJSONObject(i).getString("title") : obj.getJSONObject(i).getString("first_name") + " " + obj.getJSONObject(i).getString("last_name"));
-                                row.addView(tv);
-                                offers_in_table_.add(row);
-                            }
-                            table.addView(row);
-                        }
-                        linearLayout.addView(table);
-                        setRowListener();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
             }
         }
 
         SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
-        sendPostReqAsyncTask.execute();
+        try {
+            return sendPostReqAsyncTask.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
