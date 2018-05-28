@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TableRow;
 
 import com.educationaid.tutoring.Constants.Constants;
+import com.educationaid.tutoring.Model.Offer;
 import com.educationaid.tutoring.Model.User;
 import com.educationaid.tutoring.adapters.OfferListAdapter;
 
@@ -71,7 +72,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        ArrayList<Pair<String, String>> offers = buildList();
+        ArrayList<Offer> offers = buildList();
 
         @SuppressLint("ResourceType")
         OfferListAdapter oladapter = new OfferListAdapter(this, offers, true);
@@ -83,15 +84,18 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setAdapter(oladapter);
     }
 
-    private ArrayList<Pair<String, String>> buildList() {
-        ArrayList<Pair<String, String>> offerList = new ArrayList<>();
+    private ArrayList<Offer> buildList() {
+        ArrayList<Offer> offerList = new ArrayList<>();
         String offerString = getOffers();
         try {
             JSONArray jsonArrayOffers = new JSONArray(offerString);
             for (int i = 0; i < jsonArrayOffers.length(); i++) {
                 String id = jsonArrayOffers.getJSONObject(i).getString("o_id");
                 String title = jsonArrayOffers.getJSONObject(i).getString("title");
-                offerList.add(new Pair<>(id, title));
+                String forename = jsonArrayOffers.getJSONObject(i).getString("first_name");
+                String lastname = jsonArrayOffers.getJSONObject(i).getString("last_name");
+
+                offerList.add(new Offer(id, title, forename, lastname));
             }
             return offerList;
         } catch (JSONException e) {

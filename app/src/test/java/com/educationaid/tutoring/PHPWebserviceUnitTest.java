@@ -5,6 +5,7 @@ import com.educationaid.tutoring.WebService.WebService;
 
 import junit.framework.Assert;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -31,14 +32,18 @@ public class PHPWebserviceUnitTest extends Mockito {
 
     @Test
     public void phpRegisterTest() throws Exception {
-        Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
         String result = webService.Register("Max", "Mustermann", "test@test.com", "123", "0");
         Assert.assertTrue(result.equals(Constants.ANS_CREATED_USER_SUCCESFULLY));
         Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
     }
 
     @Test
-    public void phpCreateDeleteOfferTest() throws Exception {
-        //Assert.assertTrue(!webService.Login("john@example.com", "1234").equals(Constants.ANS_RIGHT_USERNAME_PASSWORD));
+    public void phpCreateOffer() throws Exception {
+
+    }
+
+    @After
+    public void CleanUp() {
+
     }
 }

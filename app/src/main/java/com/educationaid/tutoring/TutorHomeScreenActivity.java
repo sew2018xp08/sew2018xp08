@@ -9,12 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.educationaid.tutoring.Constants.Constants;
+import com.educationaid.tutoring.Model.Offer;
 import com.educationaid.tutoring.Model.User;
 import com.educationaid.tutoring.adapters.OfferListAdapter;
 
@@ -49,7 +49,7 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
         ((TextView)findViewById(R.id.welcomeText)).setText("Hello " + HomeActivity.currentUser.getFirstName() + " " + HomeActivity.currentUser.getLastName() + ".");
 
-        ArrayList<Pair<String, String>> offers = buildList();
+        ArrayList<Offer> offers = buildList();
 
         @SuppressLint("ResourceType")
         OfferListAdapter oladapter = new OfferListAdapter(this, offers, false);
@@ -66,16 +66,16 @@ public class TutorHomeScreenActivity extends AppCompatActivity {
         });
     }
 
-    public ArrayList<Pair<String, String>> buildList() {
+    public ArrayList<Offer> buildList() {
         String offersString = getOffers(Integer.toString(HomeActivity.currentUser.getUserId()));
-        ArrayList<Pair<String, String>> offers = new ArrayList<>();
+        ArrayList<Offer> offers = new ArrayList<>();
 
         try {
             JSONArray jsonArrayOffers = new JSONArray(offersString);
             for (int i = 0; i < jsonArrayOffers.length(); i++) {
                 String id = jsonArrayOffers.getJSONObject(i).getString("o_id");
                 String title = jsonArrayOffers.getJSONObject(i).getString("title");
-                offers.add(new Pair<>(id, title));
+                offers.add(new Offer(id, title));
             }
             return offers;
         } catch (JSONException e) {

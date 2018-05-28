@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.educationaid.tutoring.Constants.Constants;
+import com.educationaid.tutoring.HomeActivity;
+import com.educationaid.tutoring.Model.Offer;
 import com.educationaid.tutoring.OfferDetailActivity;
 import com.educationaid.tutoring.R;
 import com.educationaid.tutoring.WebService.WebService;
@@ -24,7 +25,7 @@ import java.util.List;
 
 public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyViewHolder>{
 
-    private List<Pair<String, String>> itemList;
+    private List<Offer> itemList;
     private RecyclerViewClickListener mListener;
     private Activity activity;
     private View activityView;
@@ -56,7 +57,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
         }
     }
 
-    public OfferListAdapter(Activity activity, List<Pair<String, String>> itemList, boolean isHomeScreen) {
+    public OfferListAdapter(Activity activity, List<Offer> itemList, boolean isHomeScreen) {
         this.itemList = itemList;
         this.activity = activity;
         this.isHomeScreen = isHomeScreen;
@@ -74,15 +75,21 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Pair<String, String> item = itemList.get(position);
-        holder.offerTitle.setText(item.second);
-        holder.offerOwner.setText("Max Mustermann");
+        Offer item = itemList.get(position);
+        holder.offerTitle.setText(item.get_offerTitle());
+        holder.offerOwner.setText(item.get_offerOwnerForename() + " " + item.get_offerOwnerLastName());
 
-        if (isHomeScreen) offerTextView.findViewById(R.id.imgStar).setVisibility(View.VISIBLE);
-        else offerTextView.findViewById(R.id.button_delete).setVisibility(View.VISIBLE);
+        if (isHomeScreen) {
+            if (!HomeActivity.currentUser.isProUser())
+                offerTextView.findViewById(R.id.imgStar).setVisibility(View.GONE);
+            offerTextView.findViewById(R.id.button_delete).setVisibility(View.GONE);
+        } else {
+            offerTextView.findViewById(R.id.offerOwner).setVisibility(View.GONE);
+            offerTextView.findViewById(R.id.imgStar).setVisibility(View.GONE);
+        }
 
-        holder.imgButton.setOnClickListener(view -> showConfirmationDialog(activityView, item.first, position));
-        holder.textLayout.setOnClickListener(v -> displayOffer(activityView, item.first));
+        holder.imgButton.setOnClickListener(view -> showConfirmationDialog(activityView, item.get_id(), position));
+        holder.textLayout.setOnClickListener(v -> displayOffer(activityView, item.get_id()));
     }
 
     private void displayOffer(View v, String offerId) {
