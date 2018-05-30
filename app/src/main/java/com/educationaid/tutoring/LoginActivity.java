@@ -1,9 +1,12 @@
 package com.educationaid.tutoring;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,15 +72,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
+                Bitmap decodedByte = null;
                 if (!result.equals(Constants.ANS_RIGHT_USERNAME_PASSWORD)) {
                     try {
                         JSONArray obj = new JSONArray(result);
                         System.out.println("Hei sweetty <3");
+                        String encodedImage = obj.getJSONObject(0).getString("picture");
+
+                        if(!encodedImage.equals("null")) {
+                            byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+                            decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        }
 
                         HomeActivity.currentUser = new User(Integer.valueOf(obj.getJSONObject(0).getString("u_id")), obj.getJSONObject(0).getString("first_name"),
                                 obj.getJSONObject(0).getString("last_name"), obj.getJSONObject(0).getString("pro").equals("0") ? false : true, obj.getJSONObject(0).getString("email"),
-                                Integer.valueOf(obj.getJSONObject(0).getString("admin")));
+                                Integer.valueOf(obj.getJSONObject(0).getString("admin")), null);
+                        if(HomeActivity.currentUser.isProUser()) {
+                            HomeActivity.currentUser.setProfilePicture(decodedByte);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
