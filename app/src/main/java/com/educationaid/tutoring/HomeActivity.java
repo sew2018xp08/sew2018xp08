@@ -64,7 +64,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(currentUser.getAdmin() == Constants.NOT_LOGGED_IN ? R.menu.menu_home_view_unlogged : R.menu.menu_home_view_loggedin, menu);
+        inflater.inflate(currentUser == null ? R.menu.menu_home_view_unlogged : R.menu.menu_home_view_loggedin, menu);
         return true;
     }
 
@@ -94,8 +94,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 String title = jsonArrayOffers.getJSONObject(i).getString("title");
                 String forename = jsonArrayOffers.getJSONObject(i).getString("first_name");
                 String lastname = jsonArrayOffers.getJSONObject(i).getString("last_name");
+                String isPro = jsonArrayOffers.getJSONObject(i).getString("pro");
 
-                offerList.add(new Offer(id, title, forename, lastname));
+                offerList.add(new Offer(id, title, forename, lastname, isPro));
             }
             return offerList;
         } catch (JSONException e) {

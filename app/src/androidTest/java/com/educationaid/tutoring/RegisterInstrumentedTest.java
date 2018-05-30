@@ -1,6 +1,5 @@
 package com.educationaid.tutoring;
 
-import android.os.AsyncTask;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -8,22 +7,12 @@ import android.support.test.runner.AndroidJUnit4;
 import com.educationaid.tutoring.Constants.Constants;
 import com.educationaid.tutoring.WebService.WebService;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
@@ -100,7 +89,6 @@ public class RegisterInstrumentedTest {
         onView(withId(R.id.btnRegistry)).perform(scrollTo(), click());
 
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        onView(withText("Login")).check(matches(isDisplayed()));
         onView(withText("Login")).check(matches(isDisplayed()));
         onView(withText("Login")).perform(click());
         onView(withId(R.id.btnRegister)).perform(click());

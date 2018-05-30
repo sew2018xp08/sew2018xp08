@@ -7,12 +7,12 @@ public class Offer {
     public String _offerOwnerLastName;
     public boolean _isOfferOfProUser;
 
-    public Offer(String id, String offerTitle, String offerOwnerForename, String offerOwnerLastname) {
+    public Offer(String id, String offerTitle, String offerOwnerForename, String offerOwnerLastname, String isPro) {
         this._id = id;
         this._offerTitle = offerTitle;
         this._offerOwnerForename = offerOwnerForename;
         this._offerOwnerLastName = offerOwnerLastname;
-        //this._isOfferOfProUser = isOfferPro;
+        this._isOfferOfProUser = !isPro.equals("0");
     }
 
     public Offer(String id, String title) {

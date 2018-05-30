@@ -39,7 +39,8 @@ public class CreateOfferInstrumentTest {
                 obj.getJSONObject(0).getString("last_name"),
                 false,
                 obj.getJSONObject(0).getString("email"),
-                Integer.valueOf(obj.getJSONObject(0).getString("admin")));
+                Integer.valueOf(obj.getJSONObject(0).getString("admin")),
+                null);
     }
     @Test
     public void useAppContext() throws Exception {

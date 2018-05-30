@@ -79,8 +79,8 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.MyVi
         holder.offerOwner.setText(item.get_offerOwnerForename() + " " + item.get_offerOwnerLastName());
 
         if (isHomeScreen) {
-            //if (!HomeActivity.currentUser.isProUser())
-            //offerTextView.findViewById(R.id.imgStar).setVisibility(View.GONE);
+            if (!item.is_isOfferOfProUser())
+                offerTextView.findViewById(R.id.imgStar).setVisibility(View.GONE);
             offerTextView.findViewById(R.id.button_delete).setVisibility(View.GONE);
         } else {
             offerTextView.findViewById(R.id.offerOwner).setVisibility(View.GONE);
