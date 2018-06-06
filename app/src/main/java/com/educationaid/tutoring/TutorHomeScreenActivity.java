@@ -139,22 +139,15 @@ public class TutorHomeScreenActivity extends AppCompatActivity implements View.O
 
                 BasicNameValuePair tutorIDBasicNameValuePair = new BasicNameValuePair(Constants.POST_ID_UID, paramTutorID);
 
-                // We add the content that we want to pass with the POST request to as name-value pairs
-                //Now we put those sending details to an ArrayList with type safe of NameValuePair
                 List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
                 nameValuePairList.add(tutorIDBasicNameValuePair);
 
                 try {
-                    // UrlEncodedFormEntity is an entity composed of a list of url-encoded pairs.
-                    //This is typically useful while sending an HTTP POST request.
                     UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(nameValuePairList);
 
-                    // setEntity() hands the entity (here it is urlEncodedFormEntity) to the request.
                     httpPost.setEntity(urlEncodedFormEntity);
 
                     try {
-                        // HttpResponse is an interface just like HttpPost.
-                        //Therefore we can't initialize them
                         HttpResponse httpResponse = httpClient.execute(httpPost);
                         HttpEntity entity = httpResponse.getEntity();
                         return_statement = EntityUtils.toString(entity);
@@ -229,19 +222,10 @@ public class TutorHomeScreenActivity extends AppCompatActivity implements View.O
                             case 0:
                                 choosePhotoFromGallary();
                                 break;
-                            case 1:
-                                openImageChooser();
-                                break;
                         }
                     }
                 });
         pictureDialog.show();
-    }
-
-    /* Choose an image from Gallery */
-    void openImageChooser() {
-        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(takePicture, Constants.CAMERA);
     }
 
     public void choosePhotoFromGallary() {
@@ -253,13 +237,6 @@ public class TutorHomeScreenActivity extends AppCompatActivity implements View.O
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == Constants.CAMERA && resultCode == RESULT_OK && data != null) {
-            Bundle bundle = data.getExtras();
-            Bitmap map = (Bitmap)bundle.get("data");
-            pushPicture(map);
-            ((ImageView)findViewById(R.id.tutorImage)).setImageBitmap(map);
-        }
-
         if(requestCode == Constants.GALLERY && resultCode == RESULT_OK && data != null) {
             Uri imageUri = data.getData();
             Bitmap bitmap = null;
