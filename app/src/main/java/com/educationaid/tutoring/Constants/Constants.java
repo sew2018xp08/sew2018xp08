@@ -17,8 +17,6 @@ public class Constants {
     public static final String PHP_PUSH_PICTURE = "http://xp082018.000webhostapp.com/PHP/uploadfile_kevin.php";
     public static final String PHP_DELETE_OFFER = "http://xp082018.000webhostapp.com/PHP/delete_offer.php";
 
-
-
     //POST IDs
     public static String POST_ID_EMAIL = "email";
     public static String POST_ID_PASSWORD = "password";

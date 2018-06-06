@@ -43,6 +43,78 @@ public class RegisterInstrumentedTest {
     public ActivityTestRule<RegistryActivity> mActivityRule = new
             ActivityTestRule<>(RegistryActivity.class);
 
+    @Test
+    public void testLicenseInfo() {
+        onView(withId(R.id.btnLicenceInfo)).perform(click());
+        closeSoftKeyboard();
+    }
+
+    @Test
+    public void testOnlyNameEmpty() {
+        onView(withId(R.id.rbProTutor)).perform(click());
+        onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("Mustermann"));
+        onView(withId(R.id.txtEmailRegistry)).perform(scrollTo(), typeText("test@test.com"));
+        onView(withId(R.id.txtPasswordRegistry)).perform(scrollTo(), typeText("123"));
+        onView(withId(R.id.txtPasswordconfRegistry)).perform(scrollTo(), typeText("123"));
+        closeSoftKeyboard();
+        onView(withId(R.id.btnRegistry)).perform(scrollTo(), click());
+    }
+
+    @Test
+    public void testOnlySurNameEmpty() {
+        onView(withId(R.id.rbProTutor)).perform(click());
+        onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("Max"));
+        onView(withId(R.id.txtEmailRegistry)).perform(scrollTo(), typeText("test@test.com"));
+        onView(withId(R.id.txtPasswordRegistry)).perform(scrollTo(), typeText("123"));
+        onView(withId(R.id.txtPasswordconfRegistry)).perform(scrollTo(), typeText("123"));
+        closeSoftKeyboard();
+        onView(withId(R.id.btnRegistry)).perform(scrollTo(), click());
+    }
+
+    @Test
+    public void testOnlyEmailEmpty() {
+        onView(withId(R.id.rbProTutor)).perform(click());
+        onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("Max"));
+        onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("Mustermann"));
+        onView(withId(R.id.txtPasswordRegistry)).perform(scrollTo(), typeText("123"));
+        onView(withId(R.id.txtPasswordconfRegistry)).perform(scrollTo(), typeText("123"));
+        closeSoftKeyboard();
+        onView(withId(R.id.btnRegistry)).perform(scrollTo(), click());
+    }
+
+    @Test
+    public void testOnlyPasswort() {
+        onView(withId(R.id.rbProTutor)).perform(click());
+        onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("Max"));
+        onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("Mustermann"));
+        onView(withId(R.id.txtEmailRegistry)).perform(scrollTo(), typeText("test@test.com"));
+        onView(withId(R.id.txtPasswordconfRegistry)).perform(scrollTo(), typeText("123"));
+        closeSoftKeyboard();
+        onView(withId(R.id.btnRegistry)).perform(scrollTo(), click());
+    }
+
+    @Test
+    public void testOnlyPasswortSecond() {
+        onView(withId(R.id.rbProTutor)).perform(click());
+        onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("Max"));
+        onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("Mustermann"));
+        onView(withId(R.id.txtEmailRegistry)).perform(scrollTo(), typeText("test@test.com"));
+        onView(withId(R.id.txtPasswordRegistry)).perform(scrollTo(), typeText("123"));
+        closeSoftKeyboard();
+        onView(withId(R.id.btnRegistry)).perform(scrollTo(), click());
+    }
+
+    @Test
+    public void testdifferentPassword() {
+        onView(withId(R.id.rbProTutor)).perform(click());
+        onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("Max"));
+        onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("Mustermann"));
+        onView(withId(R.id.txtEmailRegistry)).perform(scrollTo(), typeText("test@test.com"));
+        onView(withId(R.id.txtPasswordRegistry)).perform(scrollTo(), typeText("123"));
+        onView(withId(R.id.txtPasswordconfRegistry)).perform(scrollTo(), typeText("1234"));
+        closeSoftKeyboard();
+        onView(withId(R.id.btnRegistry)).perform(scrollTo(), click());
+    }
 
    @Test
     public void testRegisterNewUser() {
@@ -56,6 +128,37 @@ public class RegisterInstrumentedTest {
         closeSoftKeyboard();
         onView(withId(R.id.btnRegistry)).perform(click());
 
+        Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
+    }
+
+    @Test
+    public void testRegisterNewUserAlreadyExists() {
+        onView(withId(R.id.rbProTutor)).perform(click());
+        onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("testdobule"));
+        onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("testdobule"));
+        onView(withId(R.id.txtEmailRegistry)).perform(scrollTo(), typeText("testdouble@test.com"));
+        onView(withId(R.id.txtPasswordRegistry)).perform(scrollTo(), typeText("123"));
+        onView(withId(R.id.txtPasswordconfRegistry)).perform(scrollTo(), typeText("123"));
+
+        closeSoftKeyboard();
+        onView(withId(R.id.btnRegistry)).perform(click());
+
+        if(HomeActivity.currentUser.getUserId() != Constants.NOT_LOGGED_IN) {
+            openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+            onView(withText("Logout")).perform(click());
+        }
+        onView(withId(R.id.btnMenuLogin)).perform(click());
+        onView(withId(R.id.btnRegister)).perform(click());
+
+        onView(withId(R.id.rbProTutor)).perform(click());
+        onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("testdobule"));
+        onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("testdobule"));
+        onView(withId(R.id.txtEmailRegistry)).perform(scrollTo(), typeText("testdouble@test.com"));
+        onView(withId(R.id.txtPasswordRegistry)).perform(scrollTo(), typeText("123"));
+        onView(withId(R.id.txtPasswordconfRegistry)).perform(scrollTo(), typeText("123"));
+
+        closeSoftKeyboard();
+        onView(withId(R.id.btnRegistry)).perform(click());
         Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
     }
 
