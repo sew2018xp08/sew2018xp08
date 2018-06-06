@@ -12,7 +12,6 @@ import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TableRow;
 
 import com.educationaid.tutoring.Constants.Constants;
@@ -35,7 +34,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
+public class HomeActivity extends AppCompatActivity {
     public static User currentUser = new User();
     private static ArrayList<TableRow> offers_in_table_;
     private ArrayList<Pair<String, String>> offers = new ArrayList<>();
@@ -107,26 +106,26 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()) {
-            case R.id.btnLogin:
-                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-                break;
-            default:
-                for(TableRow row : offers_in_table_) {
-                    if(v.getId() == row.getId()) {
-                        System.out.println(row.getId());
-                        Intent intent = new Intent(HomeActivity.this, OfferDetailActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("offerid", row.getId());
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                        break;
-                    }
-                }
-        }
-    }
+//    @Override
+//    public void onClick(View v) {
+//        switch(v.getId()) {
+//            case R.id.btnLogin:
+//                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+//                break;
+//            default:
+//                for(TableRow row : offers_in_table_) {
+//                    if(v.getId() == row.getId()) {
+//                        System.out.println(row.getId());
+//                        Intent intent = new Intent(HomeActivity.this, OfferDetailActivity.class);
+//                        Bundle bundle = new Bundle();
+//                        bundle.putInt("offerid", row.getId());
+//                        intent.putExtras(bundle);
+//                        startActivity(intent);
+//                        break;
+//                    }
+//                }
+//        }
+//    }
 
     public String getOffers() {
 

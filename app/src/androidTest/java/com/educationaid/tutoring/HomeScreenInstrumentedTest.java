@@ -2,24 +2,28 @@ package com.educationaid.tutoring;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 
-import com.educationaid.tutoring.Constants.Constants;
 import com.educationaid.tutoring.Model.User;
 import com.educationaid.tutoring.WebService.WebService;
 
 import junit.framework.Assert;
 
 import org.json.JSONArray;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
@@ -40,7 +44,7 @@ public class HomeScreenInstrumentedTest {
                 Integer.valueOf(obj.getJSONObject(0).getString("u_id")),
                 obj.getJSONObject(0).getString("first_name"),
                 obj.getJSONObject(0).getString("last_name"),
-                true,
+                !obj.getJSONObject(0).getString("pro").equals("0"),
                 obj.getJSONObject(0).getString("email"),
                 Integer.valueOf(obj.getJSONObject(0).getString("admin")),
                 null);
@@ -53,7 +57,6 @@ public class HomeScreenInstrumentedTest {
 
     @Test
     public void useAppContext() throws Exception {
-        // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
         assertEquals("com.educationaid.tutoring", appContext.getPackageName());
     }
@@ -61,7 +64,6 @@ public class HomeScreenInstrumentedTest {
     @Test
     public void checkRecyclerView() throws Exception {
         onView(withId(R.id.offerView)).perform(click());
-
     }
 
     @Test
@@ -69,8 +71,29 @@ public class HomeScreenInstrumentedTest {
         onView(withText("Offers")).check(matches(isDisplayed()));
     }
 
-    @After
-    public void CleanUp() {
-        Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
+    @Test
+    public void registerTutor() {
+        onView(withId(R.id.btnMenuLogin)).perform(click());
+        onView(withId(R.id.login_activity)).check(matches(isDisplayed()));
+        onView(withId(R.id.txtUserName)).perform(typeText(testUser.getEmail()));
+        onView(withId(R.id.txtPassword)).perform(typeText("1234"));
+        closeSoftKeyboard();
+        onView(withId(R.id.btnLogin)).perform(click());
+        onView(withContentDescription("Navigate up")).perform(click());
+        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+        onView(withText("Your offers")).perform(click());
+        onView(withId(R.id.tutor_home_screen)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void clickFirstItem() {
+        onView(withId(R.id.offerView))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+    }
+
+
+    @AfterClass
+    public static void CleanUp() {
+        Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(testUser.getEmail()));
     }
 }
