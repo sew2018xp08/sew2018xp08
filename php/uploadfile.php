@@ -2,7 +2,7 @@
 if($_SERVER['REQUEST_METHOD']=='POST')
 {
   // echo $_SERVER["DOCUMENT_ROOT"];  // /home1/demonuts/public_html
-  include "/users/sew2018xp08/www/PHP/config.php";
+    include "config.php";
 
   //$_FILES['image']['name']   give original name from parameter where 'image' == parametername eg. city.jpg
   //$_FILES['image']['tmp_name']  temporary system generated name

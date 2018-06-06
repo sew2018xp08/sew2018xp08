@@ -136,7 +136,7 @@ public class CreateOfferActivity extends AppCompatActivity implements View.OnCli
                 super.onPostExecute(result);
 
                 if (result.equals(Constants.ANS_CREATE_OFFER)) {
-                    Toast.makeText(CreateOfferActivity.this, "Offer created successfullyy",
+                    Toast.makeText(CreateOfferActivity.this, "Offer created successfully",
                             Toast.LENGTH_LONG).show();
                     startActivity(new Intent(CreateOfferActivity.this, TutorHomeScreenActivity.class));
 

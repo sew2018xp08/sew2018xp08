@@ -1,20 +1,19 @@
 <?php
-
     include "config.php";
 
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    $sql = 'SELECT u_id, first_name, last_name, email, admin, pro, profilePicture AS picture FROM user WHERE email = ? and password = ?';
-
+    $o_id = $_POST['offerID'];
+    $sql = 'SELECT * FROM offers o, user u WHERE o.o_id = ? and o.u_id = u.u_id';
     $user_data = array();
 
     /* prepare statement */
+
     if ($stmt = $conn->prepare($sql))
+
     {
-        $stmt->bind_param("ss", $email, $password);
-        $stmt->execute();   
-        $result = $stmt->get_result(); 
+
+        $stmt->bind_param("i", $o_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result)
         {
@@ -24,17 +23,13 @@
                 {
                     $user_data[] = $row;
                 }
+
                 echo json_encode($user_data, JSON_UNESCAPED_UNICODE);
-            }
-            else
-            {
-               echo "WRONG INPUT";
+            } else {
+                echo "NO OFFERS HERE";
             }
         }
-
         $stmt->close();
     }
-    /* close connection */
     $conn->close();
-
 ?>

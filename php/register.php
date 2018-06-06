@@ -1,12 +1,12 @@
 <?php
 
-     include "/users/sew2018xp08/www/PHP/config.php";
+    include "config.php";
 
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $pro = false;
+    $pro = $_POST['pro'];
     //Insert
     $sql = 'INSERT INTO user (first_name, last_name, email, password, pro)
         VALUES (?, ?, ?, ?, ?)';
