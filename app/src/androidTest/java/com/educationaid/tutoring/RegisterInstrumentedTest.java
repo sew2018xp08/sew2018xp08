@@ -44,10 +44,8 @@ public class RegisterInstrumentedTest {
             ActivityTestRule<>(RegistryActivity.class);
 
 
-   /* @Test
+   @Test
     public void testRegisterNewUser() {
-        onView(withId(R.id.btnMenuLogin)).perform(click());
-        onView(withId(R.id.btnRegister)).perform(click());
         onView(withId(R.id.rbProTutor)).perform(click());
         onView(withId(R.id.txtNameRegistry)).perform(scrollTo(), typeText("Max"));
         onView(withId(R.id.txtSurnameRegistry)).perform(scrollTo(), typeText("Mustermann"));
@@ -59,7 +57,7 @@ public class RegisterInstrumentedTest {
         onView(withId(R.id.btnRegistry)).perform(click());
 
         Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
-    }*/
+    }
 
    /*@Test
     public void testRegister() {
@@ -84,7 +82,7 @@ public class RegisterInstrumentedTest {
     }*/
 
 
-    @Test
+    /*@Test
     public void testRegisterExistingUser() {
         Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
         onView(withId(R.id.rbFreeTutor)).perform(click());
@@ -128,7 +126,7 @@ public class RegisterInstrumentedTest {
         onView(withText(R.string.user_alredy_exists)).inRoot(new ToastMatcher())
                 .check(matches(isDisplayed()));
         Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
-    }
+    }*/
 
 
 
