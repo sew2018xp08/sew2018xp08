@@ -77,4 +77,8 @@ public class WebService {
         ));
         return ExecuteResultToString(httpPost);
     }
+    public String DeleteOfferTest() {
+        HttpPost httpPost = new HttpPost(Constants.PHP_TEST_DELETE_OFFER);
+        return ExecuteResultToString(httpPost);
+    }
 }
