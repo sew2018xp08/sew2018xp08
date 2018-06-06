@@ -63,6 +63,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if(currentUser == null)
+            currentUser = new User();
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(currentUser.getAdmin() == Constants.NOT_LOGGED_IN ? R.menu.menu_home_view_unlogged : R.menu.menu_home_view_loggedin, menu);
         return true;
