@@ -128,7 +128,7 @@ public class RegisterInstrumentedTest {
         closeSoftKeyboard();
         onView(withId(R.id.btnRegistry)).perform(click());
 
-        Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
+        webService.DeleteTestUserFromDataBase();
     }
 
     @Test
@@ -159,6 +159,6 @@ public class RegisterInstrumentedTest {
 
         closeSoftKeyboard();
         onView(withId(R.id.btnRegistry)).perform(click());
-        Assert.assertTrue(webService.DeleteTestUserFromDataBase().equals(Constants.ANS_DELETE_USER));
+        webService.DeleteTestUserFromDataBase();
     }
 }

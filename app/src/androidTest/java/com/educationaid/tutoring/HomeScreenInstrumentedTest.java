@@ -2,9 +2,9 @@ package com.educationaid.tutoring;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 
+import com.educationaid.tutoring.Constants.Constants;
 import com.educationaid.tutoring.Model.User;
 import com.educationaid.tutoring.WebService.WebService;
 
@@ -73,6 +73,11 @@ public class HomeScreenInstrumentedTest {
 
     @Test
     public void registerTutor() {
+        if (HomeActivity.currentUser.getUserId() != Constants.NOT_LOGGED_IN) {
+            openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+            onView(withText("Logout")).perform(click());
+        }
+
         onView(withId(R.id.btnMenuLogin)).perform(click());
         onView(withId(R.id.login_activity)).check(matches(isDisplayed()));
         onView(withId(R.id.txtUserName)).perform(typeText(testUser.getEmail()));
@@ -83,12 +88,6 @@ public class HomeScreenInstrumentedTest {
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
         onView(withText("Your offers")).perform(click());
         onView(withId(R.id.tutor_home_screen)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void clickFirstItem() {
-        onView(withId(R.id.offerView))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
     }
 
 
