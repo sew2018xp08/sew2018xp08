@@ -1,6 +1,6 @@
 <?php
 
-    include "/users/sew2018xp08/www/PHP/config.php";
+    include "config.php";
 
     $offer_id = $_POST['o_id'];
 
