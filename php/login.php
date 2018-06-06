@@ -1,11 +1,11 @@
 <?php
 
-    include "/users/sew2018xp08/www/PHP/config.php";
+    include "config.php";
 
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $sql = 'SELECT u_id, first_name, last_name, email, admin FROM user WHERE email = ? and password = ?';
+    $sql = 'SELECT u_id, first_name, last_name, email, admin, pro, profilePicture AS picture FROM user WHERE email = ? and password = ?';
 
     $user_data = array();
 

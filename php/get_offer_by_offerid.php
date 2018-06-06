@@ -1,5 +1,5 @@
 <?php
-    include "/users/sew2018xp08/www/PHP/config.php";
+    include "config.php";
 
     $o_id = $_POST['offerID'];
     $sql = 'SELECT * FROM offers o, user u WHERE o.o_id = ? and o.u_id = u.u_id';
