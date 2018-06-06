@@ -56,19 +56,19 @@ public class CreateOfferInstrumentTest {
     }
     @Test
     public void addAOffer() throws  Exception {
-        onView(withId(R.id.title_label)).perform(typeText("Analysis 1"));
-        onView(withId(R.id.descripiton_label)).perform(typeText("Nachhilfestunde Montags 9:00 im LZ 2"));
+        onView(withId(R.id.txt_title_create_offer)).perform(typeText("Analysis 1"));
+        onView(withId(R.id.txt_description_create_offer)).perform(typeText("Nachhilfestunde Montags 9:00 im LZ 2"));
         onView(withId(R.id.btnMenuAdd)).perform(click());
     }
 
     @Test
     public void addAOfferWithoutDescription() throws  Exception {
-        onView(withId(R.id.title_label)).perform(typeText("Analysis 1"));
+        onView(withId(R.id.txt_description_create_offer)).perform(typeText("Analysis 1"));
         onView(withId(R.id.btnMenuAdd)).perform(click());
     }
     @Test
     public void addAOfferWithoutTitle() throws  Exception {
-        onView(withId(R.id.descripiton_label)).perform(typeText("Nachhilfestunde Montags 9:00 im LZ 2"));
+        onView(withId(R.id.txt_title_create_offer)).perform(typeText("Nachhilfestunde Montags 9:00 im LZ 2"));
         onView(withId(R.id.btnMenuAdd)).perform(click());
     }
 
