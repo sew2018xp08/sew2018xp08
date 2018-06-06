@@ -8,6 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.educationaid.tutoring.Constants.Constants;
@@ -29,29 +33,14 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateOfferActivity extends AppCompatActivity {
+public class CreateOfferActivity extends AppCompatActivity implements View.OnClickListener{
     private String price = null;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.btnMenuAdd:
-                final TextInputLayout editTitle = (TextInputLayout) findViewById(R.id.title_text);
-                final TextInputLayout descriptionTitle = (TextInputLayout) findViewById(R.id.description_text);
-                final TextInputLayout priceTitle = (TextInputLayout) findViewById(R.id.price_text);
-
-                if (editTitle.getEditText().getText().toString().equals("")) {
-                    editTitle.setError("No Title");
-                }
-                if (descriptionTitle.getEditText().getText().toString().equals("")) {
-                    descriptionTitle.setError("No Description");
-                }
-                if ((!editTitle.getEditText().getText().toString().equals(""))
-                        && !(descriptionTitle.getEditText().getText().toString().equals(""))) {
-                    // send database request
-                    price = priceTitle.getEditText().getText().toString();
-                    insertOffer(editTitle.getEditText().getText().toString(), descriptionTitle.getEditText().getText().toString(), Integer.toString(HomeActivity.currentUser.getUserId()));
-                }
+                createOffer();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -70,6 +59,8 @@ public class CreateOfferActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_offer);
+        setTitle("New Offer");
+        ((Button)findViewById(R.id.btn_creat_offer)).setOnClickListener(this);
     }
 
     public void insertOffer(String title, String description, String tutorID) {
@@ -159,4 +150,37 @@ public class CreateOfferActivity extends AppCompatActivity {
         sendPostReqAsyncTask.execute(tutorID, title, description);
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_creat_offer:
+                createOffer();
+                break;
+        }
+    }
+
+    public void createOffer() {
+        EditText editTitle = (EditText) findViewById(R.id.txt_title_create_offer);
+        EditText descriptionTitle = (EditText) findViewById(R.id.txt_description_create_offer);
+        EditText priceTitle = (EditText) findViewById(R.id.txt_price_create_offer);
+
+        if (editTitle.getText().toString().equals("")) {
+            editTitle.setError("No Title");
+        }
+        if (descriptionTitle.getText().toString().equals("")) {
+            descriptionTitle.setError("No Description");
+        }
+
+        if(priceTitle.getText().toString().equals("")) {
+            priceTitle.setError("No Price");
+        }
+
+        if ((!editTitle.getText().toString().equals(""))
+                && !(descriptionTitle.getText().toString().equals("")) &&
+                !(priceTitle.getText().toString().equals(""))) {
+            // send database request
+            price = priceTitle.getText().toString();
+            insertOffer(editTitle.getText().toString(), descriptionTitle.getText().toString(), Integer.toString(HomeActivity.currentUser.getUserId()));
+        }
+    }
 }
