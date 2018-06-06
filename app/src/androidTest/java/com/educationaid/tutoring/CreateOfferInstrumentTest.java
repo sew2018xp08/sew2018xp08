@@ -12,6 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
@@ -27,21 +28,7 @@ public class CreateOfferInstrumentTest {
     @Rule
     public ActivityTestRule<CreateOfferActivity> mActivityRule =
             new ActivityTestRule<>(CreateOfferActivity.class);
-    @BeforeClass
-    public static void Init() throws Exception
-    {
-        webService = new WebService();
-        JSONArray obj = new JSONArray( webService.Login("john@example.com", "1234"));
 
-        HomeActivity.currentUser = new User(
-                Integer.valueOf(obj.getJSONObject(0).getString("u_id")),
-                obj.getJSONObject(0).getString("first_name"),
-                obj.getJSONObject(0).getString("last_name"),
-                false,
-                obj.getJSONObject(0).getString("email"),
-                Integer.valueOf(obj.getJSONObject(0).getString("admin")),
-                null);
-    }
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
@@ -57,18 +44,22 @@ public class CreateOfferInstrumentTest {
     @Test
     public void addAOffer() throws  Exception {
         onView(withId(R.id.txt_title_create_offer)).perform(typeText("Analysis 1"));
+        closeSoftKeyboard();
         onView(withId(R.id.txt_description_create_offer)).perform(typeText("Nachhilfestunde Montags 9:00 im LZ 2"));
+        closeSoftKeyboard();
         onView(withId(R.id.btnMenuAdd)).perform(click());
     }
 
     @Test
     public void addAOfferWithoutDescription() throws  Exception {
-        onView(withId(R.id.txt_description_create_offer)).perform(typeText("Analysis 1"));
-        onView(withId(R.id.btnMenuAdd)).perform(click());
+        onView(withId(R.id.txt_title_create_offer)).perform(typeText("Analysis 1"));
+        closeSoftKeyboard();
+        onView(withId(R.id.btn_creat_offer)).perform(click());
     }
     @Test
     public void addAOfferWithoutTitle() throws  Exception {
-        onView(withId(R.id.txt_title_create_offer)).perform(typeText("Nachhilfestunde Montags 9:00 im LZ 2"));
+        onView(withId(R.id.txt_description_create_offer)).perform(typeText("Nachhilfestunde Montags 9:00 im LZ 2"));
+        closeSoftKeyboard();
         onView(withId(R.id.btnMenuAdd)).perform(click());
     }
 
